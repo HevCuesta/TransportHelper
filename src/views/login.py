@@ -5,13 +5,13 @@ def get_login_view(page: ft.Page) -> ft.View:
 
     # Login fields
     username = ft.TextField(
-        label="Username",
+        label="Nombre",
         border=ft.InputBorder.OUTLINE,
         prefix_icon=ft.icons.PERSON
     )
 
     password = ft.TextField(
-        label="Password",
+        label="Contraseña",
         password=True,
         can_reveal_password=True,
         border=ft.InputBorder.OUTLINE,
@@ -23,10 +23,10 @@ def get_login_view(page: ft.Page) -> ft.View:
 
     def login_click(e):
         if not username.value or not password.value:
-            status_text.value = "Please fill in all fields"
+            status_text.value = "Por favor, rellena los campos"
             status_text.color = "red"
         else:
-            status_text.value = f"Trying to login as {username.value}..."
+            status_text.value = f"Iniciando sesión como {username.value}..."
             status_text.color = "green"
             # Aquí puedes agregar lógica de autenticación
         status_text.update()
@@ -38,21 +38,26 @@ def get_login_view(page: ft.Page) -> ft.View:
                 ft.Container(
                     ft.Column(
                         [
+                            ft.Image(
+                                src="src/assets/bus_black.png" if page.theme_mode == ft.ThemeMode.DARK else "src/assets/bus_not_black.png",
+                                width=150,
+                                height=150,
+                                fit=ft.ImageFit.CONTAIN
+                            ),
                             ft.Text("TransportHelper", size=30, weight=ft.FontWeight.BOLD),
-                            ft.Text("Login to your account", size=16),
                             ft.Divider(height=20, color="transparent"),
                             username,
                             password,
                             status_text,
                             ft.ElevatedButton(
-                                text="Login",
+                                text="Iniciar sesión",
                                 width=320,
                                 on_click=login_click,
                                 style=ft.ButtonStyle(
                                     shape=ft.RoundedRectangleBorder(radius=10)
                                 )
                             ),
-                            ft.TextButton("Forgot password?"),
+                            ft.FilledButton("No recuerdo mi nombre o contraseña", bgcolor="green"),
                         ],
                         alignment=ft.MainAxisAlignment.CENTER,
                         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
