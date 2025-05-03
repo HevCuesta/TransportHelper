@@ -7,7 +7,7 @@ def get_login_view(page: ft.Page) -> ft.View:
     username = ft.TextField(
         label="Nombre",
         border=ft.InputBorder.OUTLINE,
-        prefix_icon=ft.icons.PERSON
+        prefix_icon=ft.Icons.PERSON
     )
 
     password = ft.TextField(
@@ -15,7 +15,7 @@ def get_login_view(page: ft.Page) -> ft.View:
         password=True,
         can_reveal_password=True,
         border=ft.InputBorder.OUTLINE,
-        prefix_icon=ft.icons.LOCK
+        prefix_icon=ft.Icons.LOCK
     )
 
     # Status
@@ -57,7 +57,7 @@ def get_login_view(page: ft.Page) -> ft.View:
                                     shape=ft.RoundedRectangleBorder(radius=10)
                                 )
                             ),
-                            ft.FilledButton("No recuerdo mi nombre o contraseña", bgcolor="green"),
+                            ft.FilledButton("No recuerdo mi nombre o contraseña", bgcolor="lightblue"),
                         ],
                         alignment=ft.MainAxisAlignment.CENTER,
                         horizontal_alignment=ft.CrossAxisAlignment.CENTER,

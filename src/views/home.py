@@ -1,8 +1,12 @@
 import flet as ft
 from views import login, register
+from db import DatabaseService
 
 def get_home_view(page: ft.Page) -> ft.View:
     page.title = "TransportHelper Inicio"
+    
+    db_service = DatabaseService()
+    db_service.initialize_database()
 
     def login_click(e):
         page.views.append(login.get_login_view(page))
