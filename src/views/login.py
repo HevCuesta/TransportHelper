@@ -1,4 +1,5 @@
 import flet as ft
+from views import recuperar_contrasena
 
 def get_login_view(page: ft.Page) -> ft.View:
     page.title = "TransportHelper Login"
@@ -30,6 +31,12 @@ def get_login_view(page: ft.Page) -> ft.View:
             status_text.color = "green"
             # Aquí puedes agregar lógica de autenticación
         status_text.update()
+        e.control.update()
+        
+    def forgot_password_click(e):
+        page.views.append(recuperar_contrasena.get_recuperar_contrasena_view(page))
+        # Navigate directly to login page on startup
+        page.go("/recuperar-contrasena")
 
     return ft.View(
         "/login",
@@ -57,7 +64,11 @@ def get_login_view(page: ft.Page) -> ft.View:
                                     shape=ft.RoundedRectangleBorder(radius=10)
                                 )
                             ),
-                            ft.FilledButton("No recuerdo mi nombre o contraseña", bgcolor="lightblue"),
+                            ft.FilledButton(
+                                "No recuerdo mi nombre o contraseña", 
+                                bgcolor="lightblue",
+                                on_click=forgot_password_click
+                            ),
                         ],
                         alignment=ft.MainAxisAlignment.CENTER,
                         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
