@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   sodipodi:docname="estrella_fin.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.58885382"
+     inkscape:cx="397.38216"
+     inkscape:cy="561.25984"
+     inkscape:window-width="1536"
+     inkscape:window-height="912"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <rect
+       x="140.95179"
+       y="356.62501"
+       width="618.15003"
+       height="59.4375"
+       id="rect2" />
+  </defs>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       sodipodi:type="star"
+       style="fill:#ffff00;stroke-width:0.264583;fill-opacity:1"
+       id="path1"
+       inkscape:flatsided="false"
+       sodipodi:sides="5"
+       sodipodi:cx="40.438728"
+       sodipodi:cy="37.742813"
+       sodipodi:r1="115.39021"
+       sodipodi:r2="57.695107"
+       sodipodi:arg1="0.9179497"
+       sodipodi:arg2="1.5462682"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 110.53253,129.40393 41.853739,95.420565 -25.076003,132.73082 -13.978811,56.911974 -70.145399,4.7875095 5.3918285,-8.0877457 37.60871,-77.612691 73.196092,-9.7511909 149.27381,-0.59550544 95.730793,54.220463 Z"
+       inkscape:transform-center-x="0.83698037"
+       inkscape:transform-center-y="-10.167118"
+       transform="matrix(0.95707209,0,0,0.99836691,67.134203,77.485943)" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,-12.580938,-1.7972766)"
+       id="text2"
+       style="font-size:42.6667px;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect2);fill:#000000;fill-opacity:1"><tspan
+         x="140.95117"
+         y="395.44637"
+         id="tspan1">Llegaste al final de tu trayecto</tspan></text>
+  </g>
+</svg>
