@@ -1,6 +1,18 @@
 import flet as ft
+from flet.core.types import PagePlatform
+from src.views import inicio
 
 play_store_url="https://play.google.com/store/apps/details?id=com.playstack.balatro.android"
+app_store_url="https://apps.apple.com/es/app/balatro/id6502451661"
+pc_url="https://store.steampowered.com/app/2379780/Balatro/"
+tienda_url=""
+if ft.PagePlatform is PagePlatform.IOS:
+    tienda_url=app_store_url
+elif ft.PagePlatform is PagePlatform.ANDROID:
+    tienda_url=play_store_url
+else:
+    tienda_url=pc_url
+
 
 
 def get_fin_viaje_view(page: ft.Page) -> ft.View:
@@ -12,17 +24,19 @@ def get_fin_viaje_view(page: ft.Page) -> ft.View:
         title=ft.Text("Valorar aplicación"),
         content=ft.Text("Serás redirigido a la tienda de aplicaciones"),
         actions=[
-            ft.TextButton("Ok", on_click=lambda e: (page.launch_url(play_store_url),page.close(te_vas_pa_la_playstore_jimbo))),
-            ft.TextButton("No", on_click=lambda e: (page.close(te_vas_pa_la_playstore_jimbo),page.go("/inicio"))),
+            ft.TextButton("Ok", on_click=lambda e: (page.launch_url(tienda_url), page.close(te_vas_pa_la_playstore_jimbo)), adaptive=True),
+            ft.TextButton("No", on_click=lambda e: (page.close(te_vas_pa_la_playstore_jimbo),page.views.append(inicio.get_home_view(page)),page.go("/inicio")),adaptive=True),
         ],
         actions_alignment=ft.MainAxisAlignment.END,
+        adaptive=True,
     )
 
     boton_si_valora = ft.ElevatedButton(
         "Si",
-        on_click=lambda e: page.open(te_vas_pa_la_playstore_jimbo)
+        on_click=lambda e: (page.open(te_vas_pa_la_playstore_jimbo),page.views.append(inicio.get_home_view(page)),page.go("/inicio")),
+        adaptive=True
     )
-    boton_no_valora = ft.ElevatedButton("No",on_click=lambda e: page.go("/inicio"))
+    boton_no_valora = ft.ElevatedButton("No",on_click=lambda e: (page.views.append(inicio.get_home_view(page)),page.go("/inicio")),adaptive=True)
 
     # Return view
     return ft.View(
