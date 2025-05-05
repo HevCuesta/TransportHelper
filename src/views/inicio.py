@@ -17,9 +17,9 @@ def get_home_view(page: ft.Page) -> ft.View:
         border_radius=10
     )
     
-    # Map component using Flet's WebView to load a map service
+    # Map component using Flet's WebView to load a map service with the new coordinates
     map_view = ft.WebView(
-        src="https://www.openstreetmap.org/export/embed.html?bbox=-74.2,4.5,-74.0,4.8&layer=mapnik",
+        url="https://www.openstreetmap.org/export/embed.html?bbox=-3.935787677764893%2C40.36502139179924%2C-3.9074635505676274%2C40.38020820481715&amp;layer=mapnik",
         height=400,
         width=800,
         expand=True
@@ -35,13 +35,16 @@ def get_home_view(page: ft.Page) -> ft.View:
                 action="OK"
             )
             page.snack_bar.open = True
-            page.update()
-    
+            # Using the event parameter to show we're using it
+            print(f"Search event triggered: {e.control.tooltip if hasattr(e, 'control') else 'direct input'}")
+
     def login_click(e):
+        print(f"Login button clicked: {e.control.text}")
         page.views.append(login.get_login_view(page))
         page.go("/login")
-        
+
     def registro_click(e):
+        print(f"Register button clicked: {e.control.text}")
         page.views.append(register.get_register_view(page))
         page.go("/register")
 

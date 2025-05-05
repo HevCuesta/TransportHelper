@@ -1,11 +1,11 @@
 import flet as ft
-from views import home
+from views import home, inicio
 
 
 def main(page: ft.Page):
-    page.views.append(home.get_home_view(page))
+    page.views.append(inicio.get_home_view(page))
     # Navigate directly to login page on startup
-    page.go("/home")
+    page.go("/inicio")
 
 
 ft.app(target=main)
