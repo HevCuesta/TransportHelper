@@ -1,5 +1,5 @@
 import flet as ft
-from views import recuperar_contrasena
+from views import recuperar_contrasena, elegir_transporte
 
 def get_login_view(page: ft.Page) -> ft.View:
     page.title = "TransportHelper Login"
@@ -23,6 +23,9 @@ def get_login_view(page: ft.Page) -> ft.View:
     status_text = ft.Text("", color="red")
 
     def login_click(e):
+        page.views.append(elegir_transporte.get_elegir_transporte_view(page))
+        # Navigate directly to login page on startup
+        page.go("/elegir_transporte")
         if not username.value or not password.value:
             status_text.value = "Por favor, rellena los campos"
             status_text.color = "red"
