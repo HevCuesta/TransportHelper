@@ -1,14 +1,14 @@
 import flet as ft
 from flet.core.types import PagePlatform
-from src.views import inicio
+from views import inicio
 
 play_store_url="https://play.google.com/store/apps/details?id=com.playstack.balatro.android"
 app_store_url="https://apps.apple.com/es/app/balatro/id6502451661"
 pc_url="https://store.steampowered.com/app/2379780/Balatro/"
 tienda_url=""
-if ft.PagePlatform is PagePlatform.IOS:
+if ft.PagePlatform == PagePlatform.IOS:
     tienda_url=app_store_url
-elif ft.PagePlatform is PagePlatform.ANDROID:
+elif ft.PagePlatform == PagePlatform.ANDROID:
     tienda_url=play_store_url
 else:
     tienda_url=pc_url
