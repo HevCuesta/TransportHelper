@@ -1,5 +1,5 @@
 import flet as ft
-from views import elegir_transporte, trayecto
+from views import trayecto, login
 
 import time
 def get_elegir_transporte_view(page: ft.Page) -> ft.View:
@@ -10,14 +10,13 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
 
     # Transport options
     transport_options = [
-        {"title": "En bus", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/bus_select_t.png", "key": "tren"},
-        {"title": "En tren", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/tren_select_t.png", "key": "bus"},
+        {"title": "En bus", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/bus_select_t.png", "key": "bus"},
+        {"title": "En tren", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/tren_select_t.png", "key": "tren"},
         {"title": "Sólo a pie", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/a_pie_select_t.png", "key": "foot-walking"},
         {"title": "En taxi", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png", "key": "taxi"},
         {"title": "En coche", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png", "key": "driving-car"},
         {"title": "En bicicleta", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png",
          "key": "cycling-road"},
-
     ]
 
     # Create each transport button
@@ -48,8 +47,8 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
         )
 
         def select_transport(control):
-            page.views.append(trayecto.get_trayecto_view(page))
             page.client_storage.set("transporte", option["key"])
+            page.views.append(trayecto.get_trayecto_view(page))
             page.go("/trayecto")
 
 
@@ -85,6 +84,12 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
         grid_container.controls = build_buttons(columns)
         page.update()
 
+    def go_login():
+        if page.views:
+            page.views.pop()
+        page.views.append(login.get_login_view(page))
+        page.go("/login")
+
     page.on_resize = update_layout
     update_layout()
 
@@ -117,7 +122,7 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
                                         icon=ft.icons.ARROW_BACK,
                                         icon_color=ft.colors.WHITE,
                                         bgcolor=ft.colors.DEEP_ORANGE,
-                                        on_click=lambda e: page.go("/login"),
+                                        on_click=lambda e: go_login(),
                                     )
                                 ],
                                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
