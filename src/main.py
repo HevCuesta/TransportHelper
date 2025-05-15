@@ -1,11 +1,11 @@
 import flet as ft
-from views import home, debug
+from views import home
 
 
 def main(page: ft.Page):
-    page.views.append(debug.get_debug_view(page))
+    page.views.append(home.get_home_view(page))
     # Navigate directly to login page on startup
-    page.go("/debug")
+    page.go("/home")
 
 
 ft.app(target=main)
