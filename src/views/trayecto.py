@@ -123,6 +123,7 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
                     curr_leg.steps[current_step_index]["distance"])
                 instruction_image_ref.current.src = "src/assets/go-straight.png"
             if isinstance(curr_leg, Bus):
+                pass
                 # Remaining time
                 # Start time general y end time general de bus
                 # Arrival y departure son franjas en los que pasa el autobús (isNonExactFrecuency = true)
