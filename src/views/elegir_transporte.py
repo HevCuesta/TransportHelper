@@ -10,7 +10,7 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
 
     # Transport options
     transport_options = [
-        {"title": "En bus", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/bus_select_t.png", "key": "bus"},
+        {"title": "En bus", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/bus_select_t.png", "key": "BUS%2CWALK"},
         {"title": "En tren", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/tren_select_t.png", "key": "tren"},
         {"title": "Sólo a pie", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/a_pie_select_t.png", "key": "foot-walking"},
         {"title": "En taxi", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png", "key": "taxi"},
