@@ -58,8 +58,12 @@ class Bus(Leg):
     def remove_step(self, index):
         self.current_distance -= self.full_distance / self.length_of_leg
 
-    def get_instruction(self):
-        return 
+    def get_instruction(self, index):
+        if index == 0:
+            return "Súbete al autobús "+self.steps[index]["stopId"].split(':')[0] + " en " + self.steps[index]["name"]
+        elif index == self.length_of_leg:
+            return "Bájate en la siguiente parada. El nombre de la parada es "+self.steps[index]["name"]
+        return "Quédate en el bus. Parada actual: " + self.steps[index]["name"]
 
 
 def get_trayecto_view(page: ft.Page) -> ft.View:
@@ -91,7 +95,6 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
     current_step_index = 0
     legs = []
     remaining_time = 0  # en segundos
-    tiempo_diferencia_acumulado = 0.0
 
     try:
         itineraries = route_data["plan"]["itineraries"]
@@ -120,39 +123,33 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
         nonlocal remaining_time
         if pn_step == 1 or pn_step == -1:
             curr_leg = legs[current_leg_index]
-            if isinstance(curr_leg, Walk):
-                print("curr-dist: "+ str(curr_leg.current_distance))
-                print("full-dist: "+ str(curr_leg.full_distance))
-                progreso_dist = (curr_leg.current_distance / curr_leg.full_distance)
-                progreso_tiempo = (
-                        (time.time()*1000 - curr_leg.start_time) / (curr_leg.end_time - curr_leg.start_time))
-                multiplicador = progreso_dist / progreso_tiempo
-                if multiplicador == 0:
-                    curr_leg.arrival = curr_leg.end_time+(time.time()*1000 - curr_leg.start_time)
-                else:
-                    curr_leg.arrival = curr_leg.end_time / multiplicador*pn_step
-                print("progreso: "+ str(progreso_dist))
-                remaining_leg_time = remaining_time - (curr_leg.duration-curr_leg.duration*(1-progreso_dist))
-                remaining_time_text.current.value = f"Tiempo restante: {int(remaining_leg_time)//60} min"
-                arrival_text.current.value = f"Hora de llegada: {datetime.fromtimestamp(time.time()+remaining_leg_time).strftime("%H:%M")}"
-                instruction_text.current.value = curr_leg.get_instruction(current_step_index)
-                if not isinstance(curr_leg, Bus):
-                    remaining_distance_text.current.value = "Remaining distance: " + str(
-                        curr_leg.steps[current_step_index]["distance"])
-                else:
-                    remaining_distance_text.current.value = ""
-                instruction_image_ref.current.src = "src/assets/go-straight.png"
-            if isinstance(curr_leg, Bus):
-                pass
-                # Remaining time
-                # Start time general y end time general de bus
-                # Arrival y departure son franjas en los que pasa el autobús (isNonExactFrecuency = true)
+            print("curr-dist: "+ str(curr_leg.current_distance))
+            print("full-dist: "+ str(curr_leg.full_distance))
+            progreso_dist = (curr_leg.current_distance / curr_leg.full_distance)
+            progreso_tiempo = (
+                    (time.time()*1000 - curr_leg.start_time) / (curr_leg.end_time - curr_leg.start_time))
+            multiplicador = progreso_dist / progreso_tiempo
+            if multiplicador == 0:
+                curr_leg.arrival = curr_leg.end_time+(time.time()*1000 - curr_leg.start_time)
+            else:
+                curr_leg.arrival = curr_leg.end_time / multiplicador*pn_step
+            print("progreso: "+ str(progreso_dist))
+            remaining_leg_time = remaining_time - (curr_leg.duration-curr_leg.duration*(1-progreso_dist))
+            remaining_time_text.current.value = f"Tiempo restante: {int(remaining_leg_time)//60} min"
+            arrival_text.current.value = f"Hora de llegada: {datetime.fromtimestamp(time.time()+remaining_leg_time).strftime("%H:%M")}"
+            instruction_text.current.value = curr_leg.get_instruction(current_step_index)
+            if not isinstance(curr_leg, Bus):
+                remaining_distance_text.current.value = "Remaining distance: " + str(
+                    curr_leg.steps[current_step_index]["distance"])
+            else:
+                remaining_distance_text.current.value = ""
+            instruction_image_ref.current.src = "src/assets/go-straight.png"
             page.update()
 
 
 
     def next_step(e):
-        nonlocal current_step_index, current_leg_index, tiempo_diferencia_acumulado, remaining_time
+        nonlocal current_step_index, current_leg_index, remaining_time
         if legs:
             if current_step_index < legs[current_leg_index].length_of_leg - 1:
                 legs[current_leg_index].add_step(current_step_index)
@@ -172,7 +169,7 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
 
 
     def previous_step(e):
-        nonlocal current_step_index, current_leg_index, tiempo_diferencia_acumulado, remaining_time
+        nonlocal current_step_index, current_leg_index, remaining_time
         if legs:
             if current_step_index > 0:
                 current_step_index -= 1
