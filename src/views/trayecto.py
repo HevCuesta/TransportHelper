@@ -29,22 +29,42 @@ class Walk(Leg):
     def __set_length_of_leg(self):
         self.length_of_leg = len(self.data.get("steps", []))
 
+    def add_step(self, index):
+        self.current_distance += self.steps[index]["distance"]
+
+    def remove_step(self, index):
+        self.current_distance -= self.steps[index]["distance"]
+
+    def get_instruction(self, index):
+        if "sidewalk" in self.steps[index]["streetName"]:
+            return "Go " + self.steps[index]["relativeDirection"]
+        else:
+            return self.steps[index]["relativeDirection"] + " por " + self.steps[index]["streetName"]
+
 class Bus(Leg):
     def __init__(self, id_, data):
         super().__init__(id_, data)
         self.route = data.get("route")
-        self.stops = data.get("intermediateStops", [])
-        self.stops.insert(0,data.get("from"))
-        self.stops.append(data.get("to"))
-        self.current_stop = 0
+        self.steps = data.get("intermediateStops", [])
+        self.steps.insert(0, data.get("from"))
+        self.steps.append(data.get("to"))
         self.__set_length_of_leg()
     def __set_length_of_leg(self):
-        self.length_of_leg = len(self.data.get("intermediateStops", []))+2
+        self.length_of_leg = len(self.data.get("intermediateStops", [])) + 2
+
+    def add_step(self, index):
+        self.current_distance += self.full_distance / self.length_of_leg
+
+    def remove_step(self, index):
+        self.current_distance -= self.full_distance / self.length_of_leg
+
+    def get_instruction(self):
+        return 
 
 
 def get_trayecto_view(page: ft.Page) -> ft.View:
     page.title = "Tu Trayecto"
-    url = "http://localhost:8080/otp/routers/default/plan?fromPlace=40.41907%2C-3.69626&toPlace=40.42516075030649%2C-3.683724445593922&time=10%3A22am&date=05-16-2025&mode=" + page.client_storage.get("transporte") + "&arriveBy=false&wheelchair=false&showIntermediateStops=true&locale=en"
+    url = "http://localhost:8080/otp/routers/default/plan?fromPlace=40.41907%2C-3.69626&toPlace=40.42516075030649%2C-3.683724445593922&time=16%3A41am&date=05-16-2025&mode=" + page.client_storage.get("transporte") + "&arriveBy=false&wheelchair=false&showIntermediateStops=true&locale=en"
 
     headers = {"Content-Type": "application/json"}
     route_data = requests.get(url, headers=headers).json()
@@ -73,8 +93,6 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
     remaining_time = 0  # en segundos
     tiempo_diferencia_acumulado = 0.0
 
-
-
     try:
         itineraries = route_data["plan"]["itineraries"]
         fastest_itinerary = min(itineraries, key=lambda x: x["duration"])
@@ -100,27 +118,29 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
 
     def update_instruction(pn_step): #1 si pasamos a la siguiente instrucción, -1 si volvemos atrás
         nonlocal remaining_time
-        print("Remaining " + str(remaining_time))
         if pn_step == 1 or pn_step == -1:
             curr_leg = legs[current_leg_index]
             if isinstance(curr_leg, Walk):
-                curr_leg.current_distance += curr_leg.steps[current_step_index]["distance"]*pn_step
-                distancia_leg = curr_leg.full_distance
-                progreso_dist = (curr_leg.current_distance / distancia_leg)
+                print("curr-dist: "+ str(curr_leg.current_distance))
+                print("full-dist: "+ str(curr_leg.full_distance))
+                progreso_dist = (curr_leg.current_distance / curr_leg.full_distance)
                 progreso_tiempo = (
-                        (1747383763*1000 - curr_leg.start_time) / (curr_leg.end_time - curr_leg.start_time))
+                        (time.time()*1000 - curr_leg.start_time) / (curr_leg.end_time - curr_leg.start_time))
                 multiplicador = progreso_dist / progreso_tiempo
-                print(curr_leg.duration)
-                curr_leg.arrival = curr_leg.end_time / multiplicador*pn_step
-
+                if multiplicador == 0:
+                    curr_leg.arrival = curr_leg.end_time+(time.time()*1000 - curr_leg.start_time)
+                else:
+                    curr_leg.arrival = curr_leg.end_time / multiplicador*pn_step
+                print("progreso: "+ str(progreso_dist))
                 remaining_leg_time = remaining_time - (curr_leg.duration-curr_leg.duration*(1-progreso_dist))
                 remaining_time_text.current.value = f"Tiempo restante: {int(remaining_leg_time)//60} min"
-                arrival_text.current.value = f"Hora de llegada: {datetime.fromtimestamp(1747383763+remaining_leg_time).strftime("%H:%M")}"
-                instruction_text.current.value = (
-                        curr_leg.steps[current_step_index]["relativeDirection"] + " por " +
-                        curr_leg.steps[current_step_index]["streetName"])
-                remaining_distance_text.current.value = "Remaining distance: " + str(
-                    curr_leg.steps[current_step_index]["distance"])
+                arrival_text.current.value = f"Hora de llegada: {datetime.fromtimestamp(time.time()+remaining_leg_time).strftime("%H:%M")}"
+                instruction_text.current.value = curr_leg.get_instruction(current_step_index)
+                if not isinstance(curr_leg, Bus):
+                    remaining_distance_text.current.value = "Remaining distance: " + str(
+                        curr_leg.steps[current_step_index]["distance"])
+                else:
+                    remaining_distance_text.current.value = ""
                 instruction_image_ref.current.src = "src/assets/go-straight.png"
             if isinstance(curr_leg, Bus):
                 pass
@@ -135,12 +155,14 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
         nonlocal current_step_index, current_leg_index, tiempo_diferencia_acumulado, remaining_time
         if legs:
             if current_step_index < legs[current_leg_index].length_of_leg - 1:
+                legs[current_leg_index].add_step(current_step_index)
                 current_step_index += 1
                 update_instruction(1)
             else:
                 if current_leg_index < len(legs) - 1:
                     # Si terminó el leg, restar tiempo del del al tiempo restante (hasta este punto sólo se restaba visualmente)
                     remaining_time -= (legs[current_leg_index]).duration
+                    legs[current_leg_index].add_step(current_step_index)
                     current_step_index = 0
                     current_leg_index += 1
                     update_instruction(1)
@@ -154,15 +176,16 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
         if legs:
             if current_step_index > 0:
                 current_step_index -= 1
+                legs[current_leg_index].remove_step(current_step_index)
                 update_instruction(-1)
             else:
                 if current_leg_index > 0:
-                    remaining_time += (legs[current_leg_index]).duration
                     current_leg_index -= 1
                     current_step_index = legs[current_leg_index].length_of_leg - 1
+                    legs[current_leg_index].remove_step(current_step_index)
+                    remaining_time += (legs[current_leg_index]).duration
                     update_instruction(-1)
                 else:
-                    #Se ha llegado al inicio del trayecto
                     pass
 
 
