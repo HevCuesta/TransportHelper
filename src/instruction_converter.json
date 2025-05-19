@@ -1,0 +1,70 @@
+{
+  "RIGHT": {
+    "text": "Gira a la derecha ",
+    "img": "src/assets/turn-right.png"
+  },
+  "LEFT": {
+    "text": "Gira a la izquierda ",
+    "img": "src/assets/turn-left.png"
+  },
+  "CONTINUE": {
+    "text": "Continúa recto ",
+    "img": "src/assets/go-straight.png"
+  },
+  "HARD_RIGHT": {
+    "text": "Gira a la derecha bastante ",
+    "img": "src/assets/turn-hard-right.png"
+  },
+  "HARD_LEFT": {
+    "text": "Gira a la izquierda bastante ",
+    "img": "src/assets/turn-hard-left.png"
+  },
+  "SLIGHTLY_RIGHT": {
+    "text": "Mantente a la derecha ",
+    "img": "src/assets/turn-slight-right.png"
+  },
+  "SLIGHTLY_LEFT": {
+    "text": "Mantente a la izquierda ",
+    "img": "src/assets/turn-slight-left.png"
+  },
+  "CIRCLE_CLOCKWISE": {
+    "text": "Toma la rotonda en el sentido de las agujas del reloj y sal por la salida nº ",
+    "img": "src/assets/roundabout-clockwise.png"
+  },
+  "CIRCLE_COUNTERCLOCKWISE": {
+    "text": "Toma la rotonda en el sentido contrario al de las agujas del reloj y sal por la salida nº ",
+    "img": "src/assets/roundabout-counterclockwise.png"
+  },
+  "NORTH": {
+    "text": "Dirígete hacia el norte",
+    "img": "src/assets/compaas-N.png"
+  },
+  "NORTHEAST": {
+    "text": "Dirígete hace el noroeste",
+    "img": "src/assets/compass-NE.png"
+  },
+  "EAST": {
+    "text": "Dirígete hace el este",
+    "img": "src/assets/compass-E.png"
+  },
+  "SOUTHEAST": {
+    "text": "Dirígete hace el sureste",
+    "img": "src/assets/compass-SE.png"
+  },
+  "SOUTH": {
+    "text": "Dirígete hace el sur",
+    "img": "src/assets/compass-S.png"
+  },
+  "SOUTHWEST": {
+    "text": "Dirígete hace el suroeste",
+    "img": "src/assets/compass-SW.png"
+  },
+  "WEST": {
+    "text": "Dirígete hace el oeste",
+    "img": "src/assets/compass-W.png"
+  },
+  "NORTHWEST": {
+    "text": "Dirígete hace el noroeste",
+    "img": "src/assets/compass-NW.png"
+  }
+}

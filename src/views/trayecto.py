@@ -6,6 +6,10 @@ import time
 from datetime import datetime
 import warnings
 warnings.filterwarnings("ignore")
+import json
+
+with  open("src/instruction_converter.json", "r", encoding="utf-8") as file:
+    instruction_converter = json.load(file)
 
 class Leg:
     def __init__(self, id_, data):
@@ -36,10 +40,24 @@ class Walk(Leg):
         self.current_distance -= self.steps[index]["distance"]
 
     def get_instruction(self, index):
+        #returns a tuple of the text formed + the image to be used
         if "sidewalk" in self.steps[index]["streetName"]:
-            return "Go " + self.steps[index]["relativeDirection"]
+            # Si no hay nombre de calle
+            info_return = instruction_converter[self.steps[index]["absoluteDirection"]]
+            return (info_return["text"],
+                    info_return["img"])
+        info_return = instruction_converter[self.steps[index]["relativeDirection"]]
+        if "CLOCK" in self.steps[index]["relativeDirection"]:
+            # Rotonda
+            return (info_return["text"] +
+                    self.steps[index]["exit"],
+                    info_return["img"])
         else:
-            return self.steps[index]["relativeDirection"] + " por " + self.steps[index]["streetName"]
+            # Otra instrucción
+            return (info_return["text"] +
+                    " por " +
+                    self.steps[index]["streetName"],
+                    info_return["img"])
 
 class Bus(Leg):
     def __init__(self, id_, data):
@@ -60,10 +78,13 @@ class Bus(Leg):
 
     def get_instruction(self, index):
         if index == 0:
-            return "Súbete al autobús "+self.steps[index]["stopId"].split(':')[0] + " en " + self.steps[index]["name"]
-        elif index == self.length_of_leg:
-            return "Bájate en la siguiente parada. El nombre de la parada es "+self.steps[index]["name"]
-        return "Quédate en el bus. Parada actual: " + self.steps[index]["name"]
+            return ("Súbete al autobús "+self.steps[index]["stopId"].split(':')[0] + " en " + self.steps[index]["name"],
+                    "src/assets/bus-subir.png")
+        elif index == self.length_of_leg-1:
+            return ("Bájate en la siguiente parada. El nombre de la parada es "+self.steps[index]["name"],
+                    "src/assets/bus-bajar.png")
+        return ("Quédate en el bus. Parada actual: " + self.steps[index]["name"],
+                "src/assets/bus-avanzar.png")
 
 
 def get_trayecto_view(page: ft.Page) -> ft.View:
@@ -137,13 +158,15 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
             remaining_leg_time = remaining_time - (curr_leg.duration-curr_leg.duration*(1-progreso_dist))
             remaining_time_text.current.value = f"Tiempo restante: {int(remaining_leg_time)//60} min"
             arrival_text.current.value = f"Hora de llegada: {datetime.fromtimestamp(time.time()+remaining_leg_time).strftime("%H:%M")}"
-            instruction_text.current.value = curr_leg.get_instruction(current_step_index)
             if not isinstance(curr_leg, Bus):
                 remaining_distance_text.current.value = "Remaining distance: " + str(
                     curr_leg.steps[current_step_index]["distance"])
             else:
                 remaining_distance_text.current.value = ""
-            instruction_image_ref.current.src = "src/assets/go-straight.png"
+
+            display_info = curr_leg.get_instruction(current_step_index)
+            instruction_text.current.value = display_info[0]
+            instruction_image_ref.current.src = display_info[1]
             page.update()
 
 
