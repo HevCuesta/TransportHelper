@@ -114,16 +114,42 @@ class Subway(Leg):
         if index == 0:
             match = re.match(r"(\d+):(\d+)__([\d]+)___", self.subway_Id)
             return ("Súbete al metro " + match.group(3) + " en " + self.steps[index]["name"],
-                    "src/assets/go-straight.png")
+                    "src/assets/metro-subir.png")
         elif index == self.length_of_leg-1:
             return ("Bájate en la siguiente parada. El nombre de la parada es "+self.steps[index]["name"],
-                    "src/assets/down-arrow.png")
+                    "src/assets/metro-bajar.png")
         return ("Quédate en el metro. Parada actual: " + self.steps[index]["name"],
-                "src/assets/go-straight.png")
+                "src/assets/metro-dentro.png")
+
+class CarPickup(Leg):
+    def __init__(self, id_, data):
+        super().__init__(id_, data)
+        self.steps = []
+        self.steps.insert(0, {"info": "start"})
+        self.steps.append({"info": "end"})
+        self.__set_length_of_leg()
+    def __set_length_of_leg(self):
+        self.length_of_leg = len(self.steps)
+
+    def add_step(self, index):
+        self.current_distance = self.full_distance
+
+    def remove_step(self, index):
+        self.current_distance = 0
+
+    def get_instruction(self, index):
+        if index == 0:
+            return ("Espera por el taxi y súbete al taxi en " + self.data["steps"][index]["streetName"],
+                    "src/assets/taxi-subir.png")
+        elif index == self.length_of_leg-1:
+            return ("Bájate del taxi cuando llegues. El nombre del lugar es "+self.data["to"]["name"],
+                    "src/assets/taxi-bajar.png")
+        return ("Quédate en el taxi. Te encuentras actualmente en: " + self.data["steps"][index]["streetName"],
+                "src/assets/taxi-dentro.png")
 
 def get_trayecto_view(page: ft.Page) -> ft.View:
     page.title = "Tu Trayecto"
-    url = "https://otp.danielcuesta.es/otp/routers/default/plan?fromPlace=40.450735382579694%2C-3.6938953399658208&toPlace=40.4281%2C-3.70213&time=10%3A40am&date=05-16-2025&mode="+page.client_storage.get("transporte")+"&arriveBy=false&wheelchair=false&showIntermediateStops=true&locale=en"
+    url = "http://otp.danielcuesta.es/otp/routers/default/plan?fromPlace=40.450735382579694%2C-3.6938953399658208&toPlace=40.4281%2C-3.70213&time=10%3A40am&date=05-16-2025&mode="+page.client_storage.get("transporte")+"&arriveBy=false&wheelchair=false&showIntermediateStops=true&locale=en"
     def finish_trayecto(e):
         page.views.append(fin_trayecto.get_fin_trayeto_view(page))
         page.client_storage.set("transporte", "")
@@ -183,8 +209,11 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
                 leg = Bus(i, leg_data)
             elif leg_data["mode"] == "SUBWAY":
                 leg = Subway(i, leg_data)
+            elif leg_data["mode"] == "CAR":
+                leg = CarPickup(i, leg_data)
             else:
-                leg = Leg(i, leg_data)
+                leg = None
+                raise Exception("Unknown leg mode")
             remaining_time += leg_data["duration"]
             legs.append(leg)
         print("Start Remaining time: ", remaining_time)
@@ -216,7 +245,7 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
             remaining_leg_time = remaining_time - (curr_leg.duration-curr_leg.duration*(1-progreso_dist))
             remaining_time_text.current.value = f"Tiempo restante: {int(remaining_leg_time)//60} min"
             arrival_text.current.value = f"Hora de llegada: {datetime.fromtimestamp(time.time()+remaining_leg_time).strftime("%H:%M")}"
-            if not isinstance(curr_leg, Bus) and not isinstance(curr_leg, Subway):
+            if isinstance(curr_leg, Walk):
                 remaining_distance_text.current.value = "Distancia restante hasta siguiente punto: " + str(
                     curr_leg.steps[current_step_index]["distance"])
             else:

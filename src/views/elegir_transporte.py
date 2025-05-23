@@ -13,7 +13,7 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
         {"title": "En bus", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/bus_select_t.png", "key": "BUS%2CWALK"},
         {"title": "En tren", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/tren_select_t.png", "key": "TRAM%2CRAIL%2CSUBWAY%2CFUNICULAR%2CGONDOLA%2CWALK"},
         {"title": "Sólo a pie", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/a_pie_select_t.png", "key": "WALK"},
-        {"title": "En taxi", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png", "key": "taxi"},
+        {"title": "En taxi", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png", "key": "CAR_PICKUP"},
         {"title": "En coche", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png", "key": "driving-car"},
         {"title": "En bicicleta", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png",
          "key": "cycling-road"},

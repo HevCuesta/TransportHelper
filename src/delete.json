@@ -2989,17 +2989,17 @@
   "previousPageCursor": "MXxQUkVWSU9VU19QQUdFfDIwMjUtMDUtMTZUMDc6NTA6MDBafHw1MG18U1RSRUVUX0FORF9BUlJJVkFMX1RJTUV8fHx8fHw=",
   "nextPageCursor": "MXxORVhUX1BBR0V8MjAyNS0wNS0xNlQwOTozMDowMFp8fDUwbXxTVFJFRVRfQU5EX0FSUklWQUxfVElNRXx8fHx8fA==",
   "debugOutput": {
-    "precalculationTime": 106325,
-    "directStreetRouterTime": 5712975,
-    "transitRouterTime": 45477022,
-    "filteringTime": 1137792,
-    "renderingTime": 560984,
-    "totalTime": 53105525,
+    "precalculationTime": 106010,
+    "directStreetRouterTime": 6079974,
+    "transitRouterTime": 48598983,
+    "filteringTime": 1160645,
+    "renderingTime": 634463,
+    "totalTime": 56621700,
     "transitRouterTimes": {
-      "tripPatternFilterTime": 2102133,
-      "accessEgressTime": 11864835,
-      "raptorSearchTime": 25975497,
-      "itineraryCreationTime": 5518130
+      "tripPatternFilterTime": 2167829,
+      "accessEgressTime": 11962160,
+      "raptorSearchTime": 26257211,
+      "itineraryCreationTime": 8192884
     }
   },
   "elevationMetadata": {
