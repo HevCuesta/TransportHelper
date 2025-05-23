@@ -1,4 +1,8 @@
 {
+  "DEPART": {
+    "text": "Ve ",
+    "img": "src/assets/go-straight.png"
+  },
   "RIGHT": {
     "text": "Gira a la derecha ",
     "img": "src/assets/turn-right.png"
