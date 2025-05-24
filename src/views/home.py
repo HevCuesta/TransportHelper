@@ -1,5 +1,5 @@
 import flet as ft
-from views import login, register
+from views import inicio
 from db import DatabaseService
 
 def get_home_view(page: ft.Page) -> ft.View:
@@ -8,15 +8,10 @@ def get_home_view(page: ft.Page) -> ft.View:
     db_service = DatabaseService()
     db_service.initialize_database()
 
-    def login_click(e):
-        page.views.append(login.get_login_view(page))
+    def home_click(e):
+        page.views.append(inicio.get_home_view(page))
         # Navigate directly to login page on startup
-        page.go("/login")
-        
-    def registro_click(e):
-        page.views.append(register.get_register_view(page))
-        # Navigate directly to login page on startup
-        page.go("/register")
+        page.go("/inicio")
 
     return ft.View(
         "/home",
@@ -35,17 +30,8 @@ def get_home_view(page: ft.Page) -> ft.View:
                             ),
                             ft.Divider(height=40, color="transparent"),
                             ft.ElevatedButton(
-                                "Iniciar Sesión", 
-                                on_click=login_click,
-                                width=320,
-                                height=50,
-                                style=ft.ButtonStyle(
-                                    shape=ft.RoundedRectangleBorder(radius=10)
-                                )
-                            ),
-                            ft.ElevatedButton(
-                                "Registro", 
-                                on_click=registro_click,
+                                "Viajar en transporte público", 
+                                on_click=home_click,
                                 width=320,
                                 height=50,
                                 style=ft.ButtonStyle(
