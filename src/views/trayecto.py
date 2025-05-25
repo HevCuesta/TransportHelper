@@ -193,6 +193,38 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
     instruction_image_ref = ft.Ref()
     instr_flet_image = ft.Image(src="", ref=instruction_image_ref, width=100, height=100, fit=ft.ImageFit.CONTAIN)
 
+    confirm_cancel_dialog = ft.Ref()
+
+    def go_to_home():
+        if page.views:
+            page.views.pop()
+            page.views.pop()
+        page.go("/home")  # Or your actual home route
+
+    def show_confirm_cancel_dialog(e):
+        confirm_cancel_dialog.current.open = True
+        page.update()
+
+    dialog_cancel_trip = ft.AlertDialog(
+        ref=confirm_cancel_dialog,
+        modal=True,
+        title=ft.Text("¿Cancelar trayecto?"),
+        content=ft.Text("¿Estás seguro de que quieres cancelar el trayecto actual?"),
+        actions=[
+            ft.IconButton(
+                icon=ft.icons.CLOSE,
+                icon_color=ft.colors.RED,
+                on_click=lambda e: (setattr(confirm_cancel_dialog.current, "open", False), page.update())
+            ),
+            ft.IconButton(
+                icon=ft.icons.CHECK,
+                icon_color=ft.colors.GREEN,
+                on_click=lambda e: go_to_home()
+            ),
+        ],
+        actions_alignment=ft.MainAxisAlignment.END,
+    )
+
     current_leg_index = 0
     current_step_index = 0
     legs = []
@@ -222,11 +254,6 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
     except Exception as e:
         print("Error al cargar ruta:", e)
 
-    def go_to_elegir_transporte():
-        if page.views:
-            page.views.pop()
-        page.views.append(elegir_transporte.get_elegir_transporte_view(page))
-        page.go("/elegir_transporte")
 
     def update_instruction(pn_step): #1 si pasamos a la siguiente instrucción, -1 si volvemos atrás, 0 si hemos llegado a destino
         nonlocal remaining_time
@@ -296,24 +323,28 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
     def previous_step(e):
         nonlocal current_step_index, current_leg_index, remaining_time, goal_almost_reached
         if legs:
-            goal_almost_reached = False
-            if current_step_index > 0:
-                current_step_index -= 1
-                legs[current_leg_index].remove_step(current_step_index)
-                update_instruction(-1)
-            else:
-                if current_leg_index > 0:
-                    current_leg_index -= 1
-                    current_step_index = legs[current_leg_index].length_of_leg - 1
+            if not goal_almost_reached:
+                if current_step_index > 0:
+                    current_step_index -= 1
                     legs[current_leg_index].remove_step(current_step_index)
-                    remaining_time += (legs[current_leg_index]).duration
                     update_instruction(-1)
                 else:
-                    pass
-
-
+                    if current_leg_index > 0:
+                        current_leg_index -= 1
+                        current_step_index = legs[current_leg_index].length_of_leg - 1
+                        legs[current_leg_index].remove_step(current_step_index)
+                        remaining_time += (legs[current_leg_index]).duration
+                        update_instruction(-1)
+                    else:
+                        pass
+            else:
+                goal_almost_reached = False
+                remaining_time += (legs[current_leg_index]).duration
+                update_instruction(-1)
 
     update_instruction(1)
+
+
 
     return ft.View(
         route="/trayecto",
@@ -336,7 +367,7 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
                                 icon=ft.icons.ARROW_BACK,
                                 icon_color=ft.colors.WHITE,
                                 bgcolor=ft.colors.DEEP_ORANGE,
-                                on_click=go_to_elegir_transporte,
+                                on_click=show_confirm_cancel_dialog,
                             )
                         ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
 
@@ -383,6 +414,7 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
                     alignment=ft.alignment.top_center,
                     expand=True
                 )
-            )
+            ),
+            dialog_cancel_trip
         ]
     )
