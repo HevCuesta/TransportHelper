@@ -1,5 +1,5 @@
 import flet as ft
-from src.views import instrucciones, login
+from . import instrucciones, home
 
 import time
 def get_ayuda_view(page: ft.Page) -> ft.View:
@@ -10,12 +10,12 @@ def get_ayuda_view(page: ft.Page) -> ft.View:
 
     # Ayudas
     ayudas = [
-        {"title": "No me gustan las direcciones", "icon": "src/assets/bus_select_t.png", "key": "direcciones-no-gustan"},
-        {"title": "No sé a dónde ir ahora", "icon": "src/assets/tren_select_t.png", "key": "no-se-donde-ir"},
-        {"title": "He perdido el transporte que tenía que coger", "icon": "src/assets/a_pie_select_t.png", "key": "transporte-perdido"},
-        {"title": "Me he saltado la parada", "icon": "src/assets/taxi_select_t.png", "key": "parada-pasada"},
-        {"title": "Me he perdido", "icon": "src/assets/taxi_select_t.png", "key": "perdido"},
-        {"title": "Me equivoqué de destino", "icon": "src/assets/taxi_select_t.png","key": "destino-equivocado"},
+        {"title": "No me gustan las direcciones", "icon": "src/assets/direcciones_no_gustan.png", "key": "direcciones-no-gustan"},
+        {"title": "No sé a dónde ir ahora", "icon": "src/assets/no_se_donde_ir.png", "key": "no-se-donde-ir"},
+        {"title": "He perdido el transporte que tenía que coger", "icon": "src/assets/transporte_perdido.png", "key": "transporte-perdido"},
+        {"title": "Me he saltado la parada", "icon": "src/assets/parada_pasada.png", "key": "parada-pasada"},
+        {"title": "Me he perdido", "icon": "src/assets/perdido.png", "key": "perdido"},
+        {"title": "Me equivoqué de destino", "icon": "src/assets/destino_equivocado.png","key": "destino-equivocado"},
     ]
 
     # Create each transport button
@@ -80,11 +80,11 @@ def get_ayuda_view(page: ft.Page) -> ft.View:
         grid_container.controls = build_buttons(columns)
         page.update()
 
-    def go_login():
+    def go_home():
         if page.views:
             page.views.pop()
-        page.views.append(login.get_login_view(page))
-        page.go("/login")
+        page.views.append(home.get_home_view(page))
+        page.go("/home")
 
     page.on_resize = update_layout
     update_layout()
@@ -118,7 +118,7 @@ def get_ayuda_view(page: ft.Page) -> ft.View:
                                         icon=ft.icons.ARROW_BACK,
                                         icon_color=ft.colors.WHITE,
                                         bgcolor=ft.colors.DEEP_ORANGE,
-                                        on_click=lambda e: go_login(),
+                                        on_click=lambda e: go_home(),
                                     )
                                 ],
                                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,

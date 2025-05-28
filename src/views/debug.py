@@ -1,5 +1,5 @@
 import flet as ft
-from views import fin_viaje, home, inicio, login, recuperar_contrasena, register
+from . import fin_viaje, home, inicio, login, recuperar_contrasena, register,ayuda
 
 
 def get_debug_view(page: ft.Page) -> ft.View:
@@ -29,8 +29,12 @@ def get_debug_view(page: ft.Page) -> ft.View:
     def ir_a_register(e):
         page.views.append(register.get_register_view(page))
         page.go("/register")
+    def ir_a_ayuda(e):
+        page.views.append(ayuda.get_ayuda_view(page))
+        page.go("/ayuda")
 
     boton_fin_viaje = ft.OutlinedButton("fin_viaje", on_click=ir_a_fin_viaje)
+    boton_ayuda = ft.OutlinedButton("ayuda", on_click=ir_a_ayuda)
     boton_home = ft.OutlinedButton("home", on_click=ir_a_home)
     boton_inicio = ft.OutlinedButton("inicio", on_click=ir_a_inicio)
     boton_login = ft.OutlinedButton("login", on_click=ir_a_login)
@@ -43,7 +47,8 @@ def get_debug_view(page: ft.Page) -> ft.View:
         boton_inicio,
         boton_login,
         boton_recuperar_contrasena,
-        boton_register
+        boton_register,
+        boton_ayuda
     ])
 
     return view
