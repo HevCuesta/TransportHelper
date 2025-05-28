@@ -158,8 +158,6 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
     headers = {"Content-Type": "application/json"}
     route_data = requests.get(url, headers=headers).json()
 
-    with open("src/delete.json", "w", encoding="utf-8") as f:
-        json.dump(route_data, f, ensure_ascii=False, indent=2)
 
     instruction_text = ft.Ref()
     instr_flet_text = ft.Text("", ref=instruction_text, color=ft.colors.BLACK)
