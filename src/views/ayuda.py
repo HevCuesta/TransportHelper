@@ -10,12 +10,12 @@ def get_ayuda_view(page: ft.Page) -> ft.View:
 
     # Ayudas
     ayudas = [
-        {"title": "No me gustan las direcciones", "icon": "src/assets/direcciones_no_gustan.png", "key": "direcciones-no-gustan"},
+        {"title": "No puedo pagar el transporte actual", "icon": "src/assets/no_puedo_pagar.png", "key": "no-puedo-pagar"},
         {"title": "No sé a dónde ir ahora", "icon": "src/assets/no_se_donde_ir.png", "key": "no-se-donde-ir"},
         {"title": "He perdido el transporte que tenía que coger", "icon": "src/assets/transporte_perdido.png", "key": "transporte-perdido"},
         {"title": "Me he saltado la parada", "icon": "src/assets/parada_pasada.png", "key": "parada-pasada"},
-        {"title": "Me he perdido", "icon": "src/assets/perdido.png", "key": "perdido"},
-        {"title": "Me equivoqué de destino", "icon": "src/assets/destino_equivocado.png","key": "destino-equivocado"},
+        {"title": "He perdido algo", "icon": "src/assets/algo_perdido.png", "key": "algo-perdido"},
+        {"title": "Me sucedió otra cosa", "icon": "src/assets/sucedio_otra_cosa.png","key": "sucedio-otra-cosa"},
     ]
 
     # Create each transport button
