@@ -23,8 +23,8 @@ def get_ayuda_view(page: ft.Page) -> ft.View:
         container = ft.Container(
             content=ft.Column(
                 [
-                    ft.Image(src=option["icon"], width=40, height=40),
-                    ft.Text(option["title"], weight="bold", size=16, text_align="center", color="black"),
+                    ft.Image(src=option["icon"], width=65, height=65),
+                    ft.Text(option["title"], weight="bold", size=14, text_align="center", color="black"),
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
