@@ -1,5 +1,5 @@
 import flet as ft
-from views import trayecto, login
+from views import trayecto, home
 
 import time
 def get_elegir_transporte_view(page: ft.Page) -> ft.View:
@@ -11,9 +11,9 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
     # Transport options
     transport_options = [
         {"title": "En bus", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/bus_select_t.png", "key": "BUS%2CWALK"},
-        {"title": "En tren", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/tren_select_t.png", "key": "tren"},
-        {"title": "Sólo a pie", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/a_pie_select_t.png", "key": "foot-walking"},
-        {"title": "En taxi", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png", "key": "taxi"},
+        {"title": "En tren", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/tren_select_t.png", "key": "TRAM%2CRAIL%2CSUBWAY%2CFUNICULAR%2CGONDOLA%2CWALK"},
+        {"title": "Sólo a pie", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/a_pie_select_t.png", "key": "WALK"},
+        {"title": "En taxi", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png", "key": "CAR_PICKUP"},
         {"title": "En coche", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png", "key": "driving-car"},
         {"title": "En bicicleta", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png",
          "key": "cycling-road"},
@@ -84,11 +84,11 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
         grid_container.controls = build_buttons(columns)
         page.update()
 
-    def go_login():
+    def go_home():
         if page.views:
             page.views.pop()
-        page.views.append(login.get_login_view(page))
-        page.go("/login")
+        page.views.append(home.get_home_view(page))
+        page.go("/home")
 
     page.on_resize = update_layout
     update_layout()
@@ -122,7 +122,7 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
                                         icon=ft.icons.ARROW_BACK,
                                         icon_color=ft.colors.WHITE,
                                         bgcolor=ft.colors.DEEP_ORANGE,
-                                        on_click=lambda e: go_login(),
+                                        on_click=lambda e: go_home(),
                                     )
                                 ],
                                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
