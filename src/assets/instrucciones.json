@@ -1,0 +1,84 @@
+[
+  {
+    "key": "direcciones-no-gustan",
+    "title": "No me gustan las direcciones",
+    "image": "src/assets/direcciones_no_gustan.png",
+    "text": [
+      "Está bien si las direcciones no te gustan o te confunden.",
+      "Puedes detenerte un momento y respirar.",
+      "Piensa en cómo te sientes y qué parte no entiendes.",
+      "Mira la imagen con calma.",
+      "Intenta leer las instrucciones una vez más, poco a poco.",
+      "No pasa nada si necesitas más tiempo.",
+      "👉 Si necesitas ayuda, llama a una persona de confianza."
+    ]
+  },
+  {
+    "key": "no-se-donde-ir",
+    "title": "No sé a dónde ir ahora",
+    "image": "src/assets/no_se_donde_ir.png",
+    "text": [
+      "Está bien si no sabes qué hacer ahora.",
+      "Mira a tu alrededor con calma.",
+      "Busca una señal, un cartel o algo familiar.",
+      "Recuerda el lugar al que querías llegar.",
+      "Piensa en el último paso que diste.",
+      "Vuelve a leer lo que pone en la app.",
+      "👉 Si necesitas ayuda, llama a una persona de confianza."
+    ]
+  },
+  {
+    "key": "transporte-perdido",
+    "title": "He perdido el transporte que tenía que coger",
+    "image": "src/assets/transporte_perdido.png",
+    "text": [
+      "No te preocupes si perdiste el transporte.",
+      "Puede pasar y tiene solución.",
+      "Quédate en un lugar tranquilo y seguro.",
+      "Piensa cuál era tu destino.",
+      "Pronto pasará otro transporte, o podrás hacer otro plan.",
+      "Respira hondo, todo estará bien.",
+      "👉 Si necesitas ayuda, llama a una persona de confianza."
+    ]
+  },
+  {
+    "key": "parada-pasada",
+    "title": "Me he saltado la parada",
+    "image": "src/assets/parada_pasada.png",
+    "text": [
+      "Está bien si pasaste de largo tu parada.",
+      "No es grave y puedes volver atrás.",
+      "Sigue tranquilo y espera a la siguiente parada.",
+      "Cuando puedas, baja con calma.",
+      "Después podrás buscar cómo regresar.",
+      "No estás solo.",
+      "👉 Si necesitas ayuda, llama a una persona de confianza."
+    ]
+  },
+  {
+    "key": "perdido",
+    "title": "Me he perdido",
+    "image": "src/assets/perdido.png",
+    "text": [
+      "Sentirse perdido puede dar miedo, pero vas a estar bien.",
+      "Respira despacio y mira a tu alrededor.",
+      "Busca un lugar conocido o seguro.",
+      "Piensa en el último lugar donde sabías dónde estabas.",
+      "Quédate donde estés hasta sentirte más tranquilo.",
+      "👉 Si necesitas ayuda, llama a una persona de confianza."
+    ]
+  },
+  {
+    "key": "destino-equivocado",
+    "title": "Me equivoqué de destino",
+    "image": "src/assets/destino_equivocado.png",
+    "text": [
+      "Está bien si llegaste a un lugar diferente.",
+      "Esto le puede pasar a cualquiera.",
+      "Respira hondo y piensa en tu destino verdadero.",
+      "Desde aquí se puede volver o ir a otro sitio.",
+      "Tómate tu tiempo para decidir el siguiente paso.",
+      "👉 Si necesitas ayuda, llama a una persona de confianza."
+    ]
+  }
+]
