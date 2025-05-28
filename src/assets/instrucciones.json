@@ -1,15 +1,15 @@
 [
   {
-    "key": "direcciones-no-gustan",
-    "title": "No me gustan las direcciones",
-    "image": "src/assets/direcciones_no_gustan.png",
+    "key": "no-puedo-pagar",
+    "title": "No puedo pagar el transporte actual",
+    "image": "src/assets/no_puedo_pagar.png",
     "text": [
-      "Está bien si las direcciones no te gustan o te confunden.",
-      "Puedes detenerte un momento y respirar.",
-      "Piensa en cómo te sientes y qué parte no entiendes.",
-      "Mira la imagen con calma.",
-      "Intenta leer las instrucciones una vez más, poco a poco.",
-      "No pasa nada si necesitas más tiempo.",
+      "Está bien si no puedes pagar el transporte.",
+      "Esto puede pasar y tiene solución.",
+      "Quédate tranquilo y busca un lugar seguro.",
+      "Revisa si tienes otro medio de pago contigo.",
+      "Si no, espera sin moverte demasiado.",
+      "Respira hondo, todo estará bien.",
       "👉 Si necesitas ayuda, llama a una persona de confianza."
     ]
   },
@@ -56,28 +56,29 @@
     ]
   },
   {
-    "key": "perdido",
-    "title": "Me he perdido",
-    "image": "src/assets/perdido.png",
+    "key": "algo-perdido",
+    "title": "He perdido algo",
+    "image": "src/assets/algo_perdido.png",
     "text": [
-      "Sentirse perdido puede dar miedo, pero vas a estar bien.",
-      "Respira despacio y mira a tu alrededor.",
-      "Busca un lugar conocido o seguro.",
-      "Piensa en el último lugar donde sabías dónde estabas.",
-      "Quédate donde estés hasta sentirte más tranquilo.",
+      "Perder algo puede ser estresante, pero se puede solucionar.",
+      "Respira despacio y recuerda dónde lo usaste por última vez.",
+      "Mira con calma a tu alrededor.",
+      "Tal vez alguien lo ha encontrado.",
+      "Puedes volver al lugar donde crees que lo perdiste.",
+      "No te culpes, esto le pasa a muchas personas.",
       "👉 Si necesitas ayuda, llama a una persona de confianza."
     ]
   },
   {
-    "key": "destino-equivocado",
-    "title": "Me equivoqué de destino",
-    "image": "src/assets/destino_equivocado.png",
+    "key": "sucedio-otra-cosa",
+    "title": "Me sucedió otra cosa",
+    "image": "src/assets/sucedio_otra_cosa.png",
     "text": [
-      "Está bien si llegaste a un lugar diferente.",
-      "Esto le puede pasar a cualquiera.",
-      "Respira hondo y piensa en tu destino verdadero.",
-      "Desde aquí se puede volver o ir a otro sitio.",
-      "Tómate tu tiempo para decidir el siguiente paso.",
+      "A veces suceden cosas inesperadas y está bien.",
+      "Respira despacio y piensa en lo que ha pasado.",
+      "Busca un lugar tranquilo para estar un momento.",
+      "Trata de explicar lo que ocurrió con palabras simples.",
+      "No pasa nada si no sabes exactamente qué hacer aún.",
       "👉 Si necesitas ayuda, llama a una persona de confianza."
     ]
   }
