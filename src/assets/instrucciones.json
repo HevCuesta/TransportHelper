@@ -2,7 +2,7 @@
   {
     "key": "no-puedo-pagar",
     "title": "No puedo pagar el transporte actual",
-    "image": "src/assets/no_puedo_pagar.png",
+    "images": "src/assets/no_puedo_pagar.png",
     "text": [
       "Está bien si no puedes pagar el transporte.",
       "Esto puede pasar y tiene solución.",

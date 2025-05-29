@@ -1,10 +1,10 @@
 import flet as ft
-from views import home
+from views import debug
 
 
 def main(page: ft.Page):
-    page.views.append(home.get_home_view(page))
-    page.go("/home")
+    page.views.append(debug.get_debug_view(page))
+    page.go("/debug")
 
 
 ft.app(target=main)
