@@ -2,7 +2,15 @@
   {
     "key": "no-puedo-pagar",
     "title": "No puedo pagar el transporte actual",
-    "images": "src/assets/no_puedo_pagar.png",
+    "images": [
+      "src/assets/no_puedo_pagar.png",
+      "src/assets/no_puedo_pagar/2.png",
+      "src/assets/no_puedo_pagar/3.png",
+      "src/assets/no_puedo_pagar/4.png",
+      "src/assets/no_puedo_pagar/5.png",
+      "src/assets/no_puedo_pagar/6.png",
+      "phone"
+    ],
     "text": [
       "Está bien si no puedes pagar el transporte.",
       "Esto puede pasar y tiene solución.",
@@ -16,7 +24,15 @@
   {
     "key": "no-se-donde-ir",
     "title": "No sé a dónde ir ahora",
-    "image": "src/assets/no_se_donde_ir.png",
+    "images": [
+      "src/assets/no_se_donde_ir.png",
+      "src/assets/no_se_donde_ir/2.png",
+      "src/assets/no_se_donde_ir/3.png",
+      "src/assets/no_se_donde_ir/4.png",
+      "src/assets/no_se_donde_ir/5.png",
+      "src/assets/no_se_donde_ir/6.png",
+      "phone"
+    ],
     "text": [
       "Está bien si no sabes qué hacer ahora.",
       "Mira a tu alrededor con calma.",
@@ -30,7 +46,15 @@
   {
     "key": "transporte-perdido",
     "title": "He perdido el transporte que tenía que coger",
-    "image": "src/assets/transporte_perdido.png",
+    "images": [
+      "src/assets/transporte_perdido.png",
+      "src/assets/transporte_perdido/2.png",
+      "src/assets/transporte_perdido/3.png",
+      "src/assets/transporte_perdido/4.png",
+      "src/assets/transporte_perdido/5.png",
+      "src/assets/transporte_perdido/6.png",
+      "phone"
+    ],
     "text": [
       "No te preocupes si perdiste el transporte.",
       "Puede pasar y tiene solución.",
@@ -44,7 +68,15 @@
   {
     "key": "parada-pasada",
     "title": "Me he saltado la parada",
-    "image": "src/assets/parada_pasada.png",
+    "images": [
+      "src/assets/parada_pasada.png",
+      "src/assets/parada_pasada/2.png",
+      "src/assets/parada_pasada/3.png",
+      "src/assets/parada_pasada/4.png",
+      "src/assets/parada_pasada/5.png",
+      "src/assets/parada_pasada/6.png",
+      "phone"
+    ],
     "text": [
       "Está bien si pasaste de largo tu parada.",
       "No es grave y puedes volver atrás.",
@@ -58,7 +90,15 @@
   {
     "key": "algo-perdido",
     "title": "He perdido algo",
-    "image": "src/assets/algo_perdido.png",
+    "images": [
+      "src/assets/algo_perdido.png",
+      "src/assets/algo_perdido/2.png",
+      "src/assets/algo_perdido/3.png",
+      "src/assets/algo_perdido/4.png",
+      "src/assets/algo_perdido/5.png",
+      "src/assets/algo_perdido/6.png",
+      "phone"
+    ],
     "text": [
       "Perder algo puede ser estresante, pero se puede solucionar.",
       "Respira despacio y recuerda dónde lo usaste por última vez.",
@@ -72,7 +112,14 @@
   {
     "key": "sucedio-otra-cosa",
     "title": "Me sucedió otra cosa",
-    "image": "src/assets/sucedio_otra_cosa.png",
+    "images": [
+      "src/assets/sucedio_otra_cosa.png",
+      "src/assets/sucedio_otra_cosa/2.png",
+      "src/assets/sucedio_otra_cosa/3.png",
+      "src/assets/sucedio_otra_cosa/4.png",
+      "src/assets/sucedio_otra_cosa/5.png",
+      "phone"
+    ],
     "text": [
       "A veces suceden cosas inesperadas y está bien.",
       "Respira despacio y piensa en lo que ha pasado.",

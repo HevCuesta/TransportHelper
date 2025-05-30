@@ -1,20 +1,13 @@
-import os.path
 import flet as ft
 from views import ayuda
 import json
 
-
-
-
-
 def get_instrucciones_view(page: ft.Page) -> ft.View:
-
     def go_home():
         if page.views:
             page.views.pop()
-        page.views.append(ayuda.get_ayuda_view(page))
+            page.views.append(ayuda.get_ayuda_view(page))
         page.go("/ayuda")
-
 
     page.title = "Resolución de problemas"
     view = ft.View(route="/instrucciones", padding=20)
@@ -31,12 +24,13 @@ def get_instrucciones_view(page: ft.Page) -> ft.View:
         return view
 
     textos = instrucciones["text"]
-    imagenes = instrucciones["images"]
+    imagenes = instrucciones["images"]  # Ahora será un array
+    
     index = ft.Ref[int]()
     index.value = 0
 
     content_text = ft.Text(value=textos[0], text_align=ft.TextAlign.CENTER, size=16)
-
+    
     image_container = ft.Container(
         content=None,
         alignment=ft.alignment.center,
@@ -50,10 +44,12 @@ def get_instrucciones_view(page: ft.Page) -> ft.View:
     def update_content():
         content_text.value = textos[index.value]
         img = imagenes[index.value]
+        
         if img == "phone":
             image_container.content = ft.Icon(ft.icons.PHONE, size=100, color=ft.colors.GREEN)
         else:
             image_container.content = ft.Image(src=img, fit=ft.ImageFit.CONTAIN, width=200)
+        
         prev_button.visible = index.value > 0
         next_button.visible = index.value < len(textos) - 1
         page.update()
@@ -85,10 +81,10 @@ def get_instrucciones_view(page: ft.Page) -> ft.View:
                     controls=[
                         ft.CircleAvatar(
                             content=ft.Image(src="src/assets/bus_not_black.png",
-                                             width=30,
-                                             height=30,
-                                             fit=ft.ImageFit.CONTAIN
-                                             ),
+                                           width=30,
+                                           height=30,
+                                           fit=ft.ImageFit.CONTAIN
+                                          ),
                             bgcolor=ft.colors.LIGHT_BLUE_200,
                         ),
                         ft.Text("T.H.", size=20, weight="bold"),
