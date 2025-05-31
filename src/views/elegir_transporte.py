@@ -102,6 +102,31 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
     page.on_resize = update_layout
     update_layout()
 
+    confirm_cancel_dialog = ft.Ref()
+    def show_confirm_cancel_dialog(e):
+        confirm_cancel_dialog.current.open = True
+        page.update()
+
+    dialog_cancel_trip = ft.AlertDialog(
+        ref=confirm_cancel_dialog,
+        modal=True,
+        title=ft.Text("¿Cancelar trayecto?"),
+        content=ft.Text("¿Estás seguro de que quieres cancelar el trayecto actual?"),
+        actions=[
+            ft.IconButton(
+                icon=ft.icons.CLOSE,
+                icon_color=ft.colors.RED,
+                on_click=lambda e: (setattr(confirm_cancel_dialog.current, "open", False), page.update())
+            ),
+            ft.IconButton(
+                icon=ft.icons.CHECK,
+                icon_color=ft.colors.GREEN,
+                on_click=lambda e: go_home()
+            ),
+        ],
+        actions_alignment=ft.MainAxisAlignment.END,
+    )
+
     # Return the composed view
     return ft.View(
         route="/elegir_transporte",
@@ -115,13 +140,17 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
                                 controls=[
                                     ft.Row(
                                         controls=[
-                                            ft.CircleAvatar(
-                                                content=ft.Image(src="src/assets/bus_not_black.png",
-                                                                 width=30,
-                                                                 height=30,
-                                                                 fit=ft.ImageFit.CONTAIN
-                                                                 ),
-                                                bgcolor=ft.colors.LIGHT_BLUE_200,
+                                            ft.GestureDetector(
+                                                on_tap=show_confirm_cancel_dialog,
+                                                content=ft.CircleAvatar(
+                                                    content=ft.Image(
+                                                        src="src/assets/bus_not_black.png",
+                                                        width=30,
+                                                        height=30,
+                                                        fit=ft.ImageFit.CONTAIN,
+                                                    ),
+                                                    bgcolor=ft.colors.LIGHT_BLUE_200,
+                                                ),
                                             ),
                                             ft.Text("T.H.", size=20, weight="bold"),
                                         ],
@@ -131,7 +160,7 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
                                         icon=ft.icons.ARROW_BACK,
                                         icon_color=ft.colors.WHITE,
                                         bgcolor=ft.colors.DEEP_ORANGE,
-                                        on_click=lambda e: go_home(),
+                                        on_click=show_confirm_cancel_dialog,
                                     )
                                 ],
                                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
@@ -146,6 +175,7 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
                             ft.Divider(height=10, color="transparent"),
                             error_message,
                             grid_container,
+                            dialog_cancel_trip,
                         ],
                         spacing=20,
                         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
