@@ -1,6 +1,6 @@
 import flet as ft
 
-from . import fin_viaje, home, inicio, ayuda
+from . import fin_trayecto, home, inicio, ayuda
 
 
 
@@ -9,8 +9,8 @@ def get_debug_view(page: ft.Page) -> ft.View:
     view = ft.View()
 
     def ir_a_fin_viaje(e):
-        page.views.append(fin_viaje.get_fin_viaje_view(page))
-        page.go("/fin_viaje")
+        page.views.append(fin_trayecto.get_fin_trayecto_view(page))
+        page.go("/fin_trayecto")
 
     def ir_a_home(e):
         page.views.append(home.get_home_view(page))

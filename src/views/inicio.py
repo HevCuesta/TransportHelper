@@ -7,16 +7,20 @@ import requests
 import time
 import traceback
 from views import elegir_transporte
+import geocoder
+g = geocoder.ip('me')
+curr_lat, curr_lng = g.latlng
 
 # ... (DatabaseService y otras importaciones/configuraciones iniciales) ...
 
 def get_home_view(page: ft.Page) -> ft.View:
+    lat, lng = None, None
     page.title = "TransportHelper Inicio"
     db_service = DatabaseService()
     db_service.initialize_database()
     geolocator = Nominatim(user_agent="transport_helper_app_v2") # User agent único
-    latitude = 40.37261
-    longitude = -3.92162
+    latitude = curr_lat
+    longitude = curr_lng
     initial_zoom = 15 # Renombrado para claridad
 
     tile_layer = TileLayer(url_template="https://tile.openstreetmap.org/{z}/{x}/{y}.png")
@@ -35,8 +39,13 @@ def get_home_view(page: ft.Page) -> ft.View:
     )
     def go_to_elegir_transporte(e):
         """Navega a la vista de trayecto."""
-        page.views.append(elegir_transporte.get_elegir_transporte_view(page))
-        page.go("/elegir_transporte")
+        nonlocal lat, lng
+        if lat and lng:
+            page.views.append(elegir_transporte.get_elegir_transporte_view(page))
+            page.client_storage.set("dest_lat", lat)
+            page.client_storage.set("dest_lng", lng)
+            lat, lng = None, None
+            page.go("/elegir_transporte")
         
     ir_aqui_button = ft.ElevatedButton(
         text="Ir Aquí",
@@ -55,6 +64,7 @@ def get_home_view(page: ft.Page) -> ft.View:
         prefix_icon=ft.Icons.SEARCH,
         expand=True,
         border_radius=10,
+        bgcolor=ft.colors.AMBER_900
         # on_change se definirá más abajo para usar get_suggestions
     )
     suggestions_container = ft.Container(
@@ -222,8 +232,9 @@ def get_home_view(page: ft.Page) -> ft.View:
     location_entry.on_submit = get_suggestions
 
     def search_location_thread_worker(search_term: str):
+        nonlocal lat, lng
         """Hilo de trabajo para geocodificar y actualizar mapa/UI."""
-        lat, lng, display_message, new_zoom_level, error_message = None, None, None, initial_zoom, None
+        display_message, new_zoom_level, error_message = None, initial_zoom, None
 
         try:
             location = geolocator.geocode(search_term, timeout=10) # Bloqueante
@@ -304,7 +315,7 @@ def get_home_view(page: ft.Page) -> ft.View:
     search_button = ft.IconButton(
         icon=ft.icons.SEARCH,
         on_click=lambda _: search_location(),
-        tooltip="Buscar ubicación"
+        tooltip="Buscar ubicación",
     )
     
 

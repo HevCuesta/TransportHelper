@@ -7,6 +7,13 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
 
     # Container to hold the dynamic grid
     grid_container = ft.Column()
+    error_message = ft.Text(
+        value="",
+        color=ft.colors.RED,
+        size=14,
+        text_align="center",
+        visible=False
+    )
 
     # Transport options
     transport_options = [
@@ -14,9 +21,6 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
         {"title": "En tren", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/tren_select_t.png", "key": "TRAM%2CRAIL%2CSUBWAY%2CFUNICULAR%2CGONDOLA%2CWALK"},
         {"title": "Sólo a pie", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/a_pie_select_t.png", "key": "WALK"},
         {"title": "En taxi", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png", "key": "CAR_PICKUP"},
-        {"title": "En coche", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png", "key": "driving-car"},
-        {"title": "En bicicleta", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/taxi_select_t.png",
-         "key": "cycling-road"},
     ]
 
     # Create each transport button
@@ -26,8 +30,6 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
                 [
                     ft.Image(src=option["icon"], width=40, height=40),
                     ft.Text(option["title"], weight="bold", size=16, text_align="center", color="black"),
-                    ft.Text(f"Llegarás en {option['time']}", size=12, text_align="center", color="black"),
-                    ft.Text(f"(a las {option['hour']})", size=12, text_align="center", color="black"),
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -47,10 +49,17 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
         )
 
         def select_transport(control):
-            page.client_storage.set("transporte", option["key"])
-            page.views.append(trayecto.get_trayecto_view(page))
-            page.go("/trayecto")
-
+            try:
+                error_message.visible = False  # Reset error
+                error_message.value = ""
+                page.client_storage.set("transporte", option["key"])
+                page.views.append(trayecto.get_trayecto_view(page))
+                page.go("/trayecto")
+            except Exception as e:
+                error_message.value = "Hubo un error al ir a la pantalla de trayecto. Inténtalo de nuevo."
+                error_message.visible = True
+                print(e)
+                page.update()
 
         def on_press_down(e):
             container.scale = 0.85
@@ -135,6 +144,7 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
                                 text_align="center",
                             ),
                             ft.Divider(height=10, color="transparent"),
+                            error_message,
                             grid_container,
                         ],
                         spacing=20,
