@@ -56,7 +56,7 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
                 page.views.append(trayecto.get_trayecto_view(page))
                 page.go("/trayecto")
             except Exception as e:
-                error_message.value = "Hubo un error al ir a la pantalla de trayecto. Inténtalo de nuevo."
+                error_message.value = "Parece que no encontramos un trayecto con este tipo de transporte. Prueba otro o cancela la opción."
                 error_message.visible = True
                 print(e)
                 page.update()

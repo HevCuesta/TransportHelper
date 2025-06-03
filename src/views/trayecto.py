@@ -175,7 +175,6 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
             + "&mode=" + page.client_storage.get("transporte")
             + "&arriveBy=false&wheelchair=false&showIntermediateStops=true&locale=en"
     )
-    url = "https://otp.danielcuesta.es/otp/routers/default/plan?fromPlace=40.450735382579694%2C-3.6938953399658208&toPlace=40.4281%2C-3.70213&time=10%3A40am&date=05-16-2025&mode=BUS%2CWALK&arriveBy=false&wheelchair=false&showIntermediateStops=true&locale=en"
     def finish_trayecto(e):
         page.views.append(fin_trayecto.get_fin_trayecto_view(page))
         page.client_storage.set("transporte", "")
