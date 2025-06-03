@@ -417,7 +417,7 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
                                                     bgcolor=ft.colors.LIGHT_BLUE_200,
                                                 ),
                                             ),
-                                            ft.Text("T.H.", size=20, weight="bold"),
+                                            ft.Text("T.H.", size=20, weight="bold", color=ft.colors.BLACK),
                                         ],
                                         spacing=10,
                                     )

@@ -52,7 +52,6 @@ def get_home_view(page: ft.Page) -> ft.View:
             page.views.append(elegir_transporte.get_elegir_transporte_view(page))
             page.client_storage.set("dest_lat", lat)
             page.client_storage.set("dest_lng", lng)
-            lat, lng = None, None
             page.go("/elegir_transporte")
         else:
             warning_text.visible = True

@@ -11,6 +11,7 @@ def get_instrucciones_view(page: ft.Page) -> ft.View:
 
     def go_home():
         if page.views:
+            page.views.clear()
             page.views.append(inicio.get_home_view(page)),
         page.go("/inicio")
 

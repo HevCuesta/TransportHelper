@@ -56,7 +56,8 @@ def get_fin_trayecto_view(page: ft.Page) -> ft.View:
     def go_home(e):
         if page.views:
             page.views.clear()
-        page.go("/home")
+            page.views.append(inicio.get_home_view(page)),
+        page.go("/inicio")
 
     # Buttons
     boton_si_valora = ft.ElevatedButton(
@@ -87,14 +88,8 @@ def get_fin_trayecto_view(page: ft.Page) -> ft.View:
                                 height=150,
                                 fit=ft.ImageFit.CONTAIN
                             ),
-                            ft.Image(
-                                src="src/assets/bus_black.png" if page.theme_mode == ft.ThemeMode.DARK else "src/assets/bus_not_black.png",
-                                width=150,
-                                height=150,
-                                fit=ft.ImageFit.CONTAIN,
-                            ),
                             ft.Text("🎉 ¡Felicidades!", size=20, weight="bold", text_align="center"),
-                            ft.Text("Has llegado a tu destino.", size=12, text_align="center"),
+                            ft.Text("Has llegado a tu destino.", size=20, text_align="center"),
                             ft.Divider(height=10, color="transparent"),
                             ft.Text("¿Nos das tu opinión sobre el viaje?", size=20, weight=ft.FontWeight.BOLD, text_align="center"),
                             ft.Row(
@@ -104,7 +99,7 @@ def get_fin_trayecto_view(page: ft.Page) -> ft.View:
                             ft.Divider(height=10, color="transparent"),
                             ft.ElevatedButton(
                                 text="Volver al menú principal",
-                                bgcolor=ft.colors.DEEP_ORANGE,
+                                bgcolor=ft.colors.RED,
                                 color=ft.colors.WHITE,
                                 style=ft.ButtonStyle(
                                     shape=ft.RoundedRectangleBorder(radius=20),
