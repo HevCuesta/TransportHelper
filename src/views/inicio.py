@@ -75,7 +75,12 @@ def get_home_view(page: ft.Page) -> ft.View:
         prefix_icon=ft.Icons.SEARCH,
         expand=True,
         border_radius=10,
-        bgcolor="#005d00"
+        border_width=4,
+        border_color="#C0E9FF" if page.theme_mode == ft.ThemeMode.DARK else "#C0E9FF",
+        label_style=ft.TextStyle(color="#C0E9FF" if page.theme_mode == ft.ThemeMode.DARK else "#63B3ED"),
+        focused_border_color="#1A365D"
+        #hint_style=ft.TextStyle(color=ft.colors.BLACK)
+        
         # on_change se definirá más abajo para usar get_suggestions
     )
     suggestions_container = ft.Container(
