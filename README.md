@@ -1,81 +1,19 @@
-# Transporthelper app
+# Transport Helper
 
-## Run the app
+Transport Helper is a mobile app built on Flet and developed to promote personal autonomy in public transportation use. The application provides step-by-step guidance and real-time support to make commuting more accessible and less stressful.
+### Recognition
+Project presented at the [talenTEA](https://autismomadrid.es/noticias/transport-helper-premio-talentea-2025/) fair for digital solutions organized by Federación Autismo Madrid, focused on technological solutions to improve the quality of life for people on the autism spectrum. This project won first place in the trasTEA competition.
+### 🤝 Contributing
+This project aims to create a positive impact in the community. Contributions, suggestions, and feedback are welcome.
 
-### uv
+## Requirements & setup
 
-Run as a desktop app:
-
+Install the dependencies:
 ```
-uv run flet run
-```
-
-Run as a web app:
-
-```
-uv run flet run --web
+pip install -r requirements.txt
 ```
 
-### Poetry
-
-Install dependencies from `pyproject.toml`:
-
+And run as a desktop app:
 ```
-poetry install
+flet run
 ```
-
-Run as a desktop app:
-
-```
-poetry run flet run
-```
-
-Run as a web app:
-
-```
-poetry run flet run --web
-```
-
-For more details on running the app, refer to the [Getting Started Guide](https://flet.dev/docs/getting-started/).
-
-## Build the app
-
-### Android
-
-```
-flet build apk -v
-```
-
-For more details on building and signing `.apk` or `.aab`, refer to the [Android Packaging Guide](https://flet.dev/docs/publish/android/).
-
-### iOS
-
-```
-flet build ipa -v
-```
-
-For more details on building and signing `.ipa`, refer to the [iOS Packaging Guide](https://flet.dev/docs/publish/ios/).
-
-### macOS
-
-```
-flet build macos -v
-```
-
-For more details on building macOS package, refer to the [macOS Packaging Guide](https://flet.dev/docs/publish/macos/).
-
-### Linux
-
-```
-flet build linux -v
-```
-
-For more details on building Linux package, refer to the [Linux Packaging Guide](https://flet.dev/docs/publish/linux/).
-
-### Windows
-
-```
-flet build windows -v
-```
-
-For more details on building Windows package, refer to the [Windows Packaging Guide](https://flet.dev/docs/publish/windows/).# TransportHelper
