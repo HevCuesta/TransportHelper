@@ -1,5 +1,5 @@
 import flet as ft
-from . import instrucciones, home
+from . import instrucciones, home, inicio
 
 import time
 def get_ayuda_view(page: ft.Page) -> ft.View:
@@ -74,17 +74,47 @@ def get_ayuda_view(page: ft.Page) -> ft.View:
             )
         return rows
 
-    # Rebuild layout when resized
+    def go_home():
+        if page.views:
+            page.views.append(inicio.get_home_view(page)),
+        page.go("/inicio")
     def update_layout(e=None):
         columns = 1 if page.width < 400 else 2
         grid_container.controls = build_buttons(columns)
         page.update()
 
-    def go_home():
+    def on_resuelto(e):
+        print("Problema resuelto")
         if page.views:
             page.views.pop()
-        page.views.append(home.get_home_view(page))
-        page.go("/home")
+            page.go("/trayecto")
+
+    confirm_cancel_dialog = ft.Ref()
+
+    dialog_cancel_trip = ft.AlertDialog(
+        ref=confirm_cancel_dialog,
+        modal=True,
+        title=ft.Text("¿Cancelar trayecto?"),
+        content=ft.Text("¿Estás seguro de que quieres cancelar el trayecto actual?"),
+        actions=[
+            ft.IconButton(
+                icon=ft.icons.CLOSE,
+                icon_color=ft.colors.RED,
+                on_click=lambda e: (setattr(confirm_cancel_dialog.current, "open", False), page.update())
+            ),
+            ft.IconButton(
+                icon=ft.icons.CHECK,
+                icon_color=ft.colors.GREEN,
+                on_click=lambda e: go_home()
+            ),
+        ],
+        actions_alignment=ft.MainAxisAlignment.END,
+    )
+    def show_confirm_cancel_dialog(e):
+        confirm_cancel_dialog.current.open = True
+        page.update()
+
+
 
     page.on_resize = update_layout
     update_layout()
@@ -100,42 +130,51 @@ def get_ayuda_view(page: ft.Page) -> ft.View:
                             # Header row
                             ft.Row(
                                 controls=[
-                                    ft.Row(
-                                        controls=[
-                                            ft.CircleAvatar(
-                                                content=ft.Image(src="src/assets/bus_not_black.png",
-                                                                 width=30,
-                                                                 height=30,
-                                                                 fit=ft.ImageFit.CONTAIN
-                                                                 ),
-                                                bgcolor=ft.colors.LIGHT_BLUE_200,
-                                            ),
-                                            ft.Text("T.H.", size=20, weight="bold"),
-                                        ],
-                                        spacing=10,
-                                    ),
                                     ft.IconButton(
                                         icon=ft.icons.ARROW_BACK,
                                         icon_color=ft.colors.WHITE,
                                         bgcolor=ft.colors.DEEP_ORANGE,
-                                        on_click=lambda e: go_home(),
+                                        on_click=show_confirm_cancel_dialog,
+                                    ),
+                                    ft.Row(
+                                        controls=[
+                                            ft.GestureDetector(
+                                                on_tap=show_confirm_cancel_dialog,
+                                                content=ft.CircleAvatar(
+                                                    content=ft.Image(
+                                                        src="src/assets/bus_not_black.png",
+                                                        width=30,
+                                                        height=30,
+                                                        fit=ft.ImageFit.CONTAIN,
+                                                    ),
+                                                    bgcolor=ft.colors.LIGHT_BLUE_200,
+                                                ),
+                                            ),
+                                            ft.Text("T.H.", size=20, weight="bold"),
+                                        ],
+                                        spacing=10,
                                     )
                                 ],
                                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                             ),
-                            ft.Divider(height=20, color="transparent"),
+                            ft.Divider(height=10, color="transparent"),
                             ft.Text(
-                                "¿Cómo te gustaría ir?",
+                                "¿Qué te ha sucedido?",
                                 size=22,
                                 weight="bold",
                                 text_align="center",
                             ),
                             ft.Divider(height=10, color="transparent"),
                             grid_container,
+                            dialog_cancel_trip,
+                            ft.ElevatedButton("He podido arreglar el problema", on_click=on_resuelto, bgcolor="#005d00",
+                                              width=page.width * 0.9)
+
                         ],
-                        spacing=20,
+                        spacing=10,
                         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     ),
+
                     padding=20,
                     alignment=ft.alignment.top_center,
                     expand=True,

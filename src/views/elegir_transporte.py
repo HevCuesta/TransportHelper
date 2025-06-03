@@ -138,6 +138,12 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
                             # Header row
                             ft.Row(
                                 controls=[
+                                    ft.IconButton(
+                                        icon=ft.icons.ARROW_BACK,
+                                        icon_color=ft.colors.WHITE,
+                                        bgcolor=ft.colors.DEEP_ORANGE,
+                                        on_click=show_confirm_cancel_dialog,
+                                    ),
                                     ft.Row(
                                         controls=[
                                             ft.GestureDetector(
@@ -155,12 +161,6 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
                                             ft.Text("T.H.", size=20, weight="bold"),
                                         ],
                                         spacing=10,
-                                    ),
-                                    ft.IconButton(
-                                        icon=ft.icons.ARROW_BACK,
-                                        icon_color=ft.colors.WHITE,
-                                        bgcolor=ft.colors.DEEP_ORANGE,
-                                        on_click=show_confirm_cancel_dialog,
                                     )
                                 ],
                                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,

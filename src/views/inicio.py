@@ -21,7 +21,7 @@ def get_home_view(page: ft.Page) -> ft.View:
     geolocator = Nominatim(user_agent="transport_helper_app_v2") # User agent único
     latitude = curr_lat
     longitude = curr_lng
-    initial_zoom = 15 # Renombrado para claridad
+    initial_zoom = 15 #Renombrado para claridad
 
     tile_layer = TileLayer(url_template="https://tile.openstreetmap.org/{z}/{x}/{y}.png")
     marker = Marker(
@@ -37,6 +37,14 @@ def get_home_view(page: ft.Page) -> ft.View:
         layers=[tile_layer, marker_layer],
         min_zoom=10
     )
+
+    warning_text = ft.Text(
+        value="",
+        color=ft.colors.RED,
+        size=14,
+        text_align="center",
+        visible=False
+    )
     def go_to_elegir_transporte(e):
         """Navega a la vista de trayecto."""
         nonlocal lat, lng
@@ -46,6 +54,10 @@ def get_home_view(page: ft.Page) -> ft.View:
             page.client_storage.set("dest_lng", lng)
             lat, lng = None, None
             page.go("/elegir_transporte")
+        else:
+            warning_text.visible = True
+            warning_text.value = "Elige una ubicación de las que ofrecemos antes de continuar"
+            page.update()
         
     ir_aqui_button = ft.ElevatedButton(
         text="Ir Aquí",
@@ -59,12 +71,12 @@ def get_home_view(page: ft.Page) -> ft.View:
         width=200,
     )
     location_entry = ft.TextField(
-        label="Buscar ubicación",
+        label="Busca aquí a donde quieres ir",
         hint_text="Ingresa una dirección o lugar",
         prefix_icon=ft.Icons.SEARCH,
         expand=True,
         border_radius=10,
-        bgcolor=ft.colors.AMBER_900
+        bgcolor="#005d00"
         # on_change se definirá más abajo para usar get_suggestions
     )
     suggestions_container = ft.Container(
@@ -336,6 +348,7 @@ def get_home_view(page: ft.Page) -> ft.View:
                             ),
                             ft.Row([location_entry, search_button], alignment=ft.MainAxisAlignment.START),
                             map_widget,
+                            warning_text,
                             ft.Row(
                                 [
                                     ir_aqui_button,

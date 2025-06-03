@@ -1,7 +1,7 @@
 # Código completo con la lógica ajustada
 import flet as ft
 from curl_cffi import requests
-from views import elegir_transporte, fin_trayecto
+from views import elegir_transporte, fin_trayecto, ayuda
 import time
 from datetime import datetime
 import warnings
@@ -142,7 +142,7 @@ class CarPickup(Leg):
 
     def get_instruction(self, index):
         if index == 0:
-            return ("Espera por el taxi y súbete al taxi en " + self.data["steps"][index]["streetName"],
+            return ("Solicita un taxi, espera por él y súbete al taxi en " + self.data["steps"][index]["streetName"],
                     "src/assets/taxi-subir.png")
         elif index == self.length_of_leg-1:
             return ("Bájate del taxi cuando llegues. El nombre del lugar es "+self.data["to"]["name"],
@@ -175,10 +175,19 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
             + "&mode=" + page.client_storage.get("transporte")
             + "&arriveBy=false&wheelchair=false&showIntermediateStops=true&locale=en"
     )
+
+    #url = "https://otp.danielcuesta.es/otp/routers/default/plan?fromPlace=40.450735382579694%2C-3.6938953399658208&toPlace=40.4281%2C-3.70213&time=10%3A40am&date=05-16-2025&mode=BUS%2CWALK&arriveBy=false&wheelchair=false&showIntermediateStops=true&locale=en"
+
+
     def finish_trayecto(e):
         page.views.append(fin_trayecto.get_fin_trayecto_view(page))
         page.client_storage.set("transporte", "")
         page.go("/fin_trayecto")
+
+    def go_to_ayuda(e):
+        page.views.append(ayuda.get_ayuda_view(page))
+        print(page.views)
+        page.go("/ayuda")
 
     def update_instruction(pn_step): #1 si pasamos a la siguiente instrucción, -1 si volvemos atrás, 0 si hemos llegado a destino
         nonlocal remaining_time
@@ -376,7 +385,6 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
 
 
 
-
     update_instruction(1)
 
     return ft.View(
@@ -388,26 +396,31 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
                     content=ft.Column(
                         [
                             ft.Row(
-                                [
-                                    ft.GestureDetector(
-                                        on_tap=show_confirm_cancel_dialog,
-                                        content=ft.CircleAvatar(
-                                            content=ft.Image(
-                                                src="src/assets/bus_not_black.png",
-                                                width=30,
-                                                height=30,
-                                                fit=ft.ImageFit.CONTAIN,
-                                            ),
-                                            bgcolor=ft.colors.LIGHT_BLUE_200,
-                                        ),
-                                    ),
-                                    ft.Text("T.H.", size=20, weight="bold", color=ft.colors.BLACK),
+                                controls=[
                                     ft.IconButton(
                                         icon=ft.icons.ARROW_BACK,
                                         icon_color=ft.colors.WHITE,
                                         bgcolor=ft.colors.DEEP_ORANGE,
                                         on_click=show_confirm_cancel_dialog,
                                     ),
+                                    ft.Row(
+                                        controls=[
+                                            ft.GestureDetector(
+                                                on_tap=show_confirm_cancel_dialog,
+                                                content=ft.CircleAvatar(
+                                                    content=ft.Image(
+                                                        src="src/assets/bus_not_black.png",
+                                                        width=30,
+                                                        height=30,
+                                                        fit=ft.ImageFit.CONTAIN,
+                                                    ),
+                                                    bgcolor=ft.colors.LIGHT_BLUE_200,
+                                                ),
+                                            ),
+                                            ft.Text("T.H.", size=20, weight="bold"),
+                                        ],
+                                        spacing=10,
+                                    )
                                 ],
                                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                             ),
@@ -486,6 +499,21 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
                             ),
 
                             dialog_cancel_trip,
+                            ft.Row(
+                                [
+                                    ft.Icon(name=ft.icons.WARNING, color=ft.colors.AMBER_700),
+                                    ft.ElevatedButton(
+                                        text="¿Necesitas ayuda?",
+                                        icon=ft.icons.HELP,
+                                        bgcolor=ft.colors.AMBER_700,
+                                        color=ft.colors.BLACK,
+                                        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=20)),
+                                        on_click=go_to_ayuda,
+                                    ),
+                                    ft.Icon(name=ft.icons.WARNING, color=ft.colors.AMBER_700),
+                                ],
+                                alignment=ft.MainAxisAlignment.CENTER,
+                            ),
                         ],
                         spacing=15,
                         expand=True,
