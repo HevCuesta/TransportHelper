@@ -15,6 +15,17 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
         visible=False
     )
 
+    spinner_ref = ft.Ref[ft.Column]()
+    spinner = ft.Column(
+        ref=spinner_ref,
+        controls=[
+            ft.ProgressRing(),
+            ft.Text("Cargando trayecto...")
+        ],
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        visible=False
+    )
+
     # Transport options
     transport_options = [
         {"title": "En bus", "time": "xx min/h", "hour": "xx:xx", "icon": "src/assets/bus_select_t.png", "key": "BUS%2CWALK"},
@@ -51,14 +62,19 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
         def select_transport(control):
             try:
                 error_message.visible = False  # Reset error
+                spinner_ref.current.visible = True
+                page.update()
                 error_message.value = ""
                 page.client_storage.set("transporte", option["key"])
                 page.views.append(trayecto.get_trayecto_view(page))
+                # make spinner visible and invisible after trayecto has loaded
                 page.go("/trayecto")
+                spinner_ref.current.visible = False
             except Exception as e:
                 error_message.value = "Parece que no encontramos un trayecto con este tipo de transporte. Prueba otro o cancela la opción."
                 error_message.visible = True
                 print(e)
+                spinner_ref.current.visible = False
                 page.update()
 
         def on_press_down(e):
@@ -175,6 +191,7 @@ def get_elegir_transporte_view(page: ft.Page) -> ft.View:
                             ft.Divider(height=10, color="transparent"),
                             error_message,
                             grid_container,
+                            spinner,
                             dialog_cancel_trip,
                         ],
                         spacing=20,

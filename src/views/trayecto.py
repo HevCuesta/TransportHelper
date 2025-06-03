@@ -283,7 +283,7 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
 
 
     instruction_text = ft.Ref()
-    instr_flet_text = ft.Text("", ref=instruction_text, color=ft.colors.WHITE)
+    instr_flet_text = ft.Text("", ref=instruction_text, color=ft.colors.WHITE if page.theme_mode != ft.ThemeMode.DARK else ft.colors.BLACK)
 
     found_place_button = ft.ElevatedButton(
         text="Pulsa aquí si encontraste el lugar",
@@ -298,18 +298,17 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
         on_click=finish_trayecto
     )
 
-
     remaining_time_text = ft.Ref()
-    remaining_flet_time = ft.Text("", ref=remaining_time_text, color=ft.colors.WHITE)
+    remaining_flet_time = ft.Text("", ref=remaining_time_text, color=ft.colors.WHITE if page.theme_mode != ft.ThemeMode.DARK else ft.colors.BLACK)
 
     remaining_distance_text = ft.Ref()
-    remaining_flet_distance = ft.Text("", ref=remaining_distance_text, color=ft.colors.WHITE)
+    remaining_flet_distance = ft.Text("", ref=remaining_distance_text, color=ft.colors.WHITE if page.theme_mode != ft.ThemeMode.DARK else ft.colors.BLACK)
 
     paradas_restantes_text = ft.Ref()
-    paradas_flet_text = ft.Text("", ref=paradas_restantes_text, color=ft.colors.WHITE)
+    paradas_flet_text = ft.Text("", ref=paradas_restantes_text, color=ft.colors.WHITE if page.theme_mode != ft.ThemeMode.DARK else ft.colors.BLACK)
 
     arrival_text = ft.Ref()
-    arrival_flet = ft.Text("", ref=arrival_text, color=ft.colors.WHITE)
+    arrival_flet = ft.Text("", ref=arrival_text, color=ft.colors.WHITE if page.theme_mode != ft.ThemeMode.DARK else ft.colors.BLACK)
 
     instruction_image_ref = ft.Ref()
     instr_flet_image = ft.GestureDetector(
@@ -415,7 +414,7 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
                                                     bgcolor=ft.colors.LIGHT_BLUE_200,
                                                 ),
                                             ),
-                                            ft.Text("T.H.", size=20, weight="bold", color=ft.colors.WHITE),
+                                            ft.Text("T.H.", size=20, weight="bold", color=ft.colors.WHITE if page.theme_mode != ft.ThemeMode.DARK else ft.colors.BLACK),
                                         ],
                                         spacing=10,
                                     )
@@ -424,7 +423,7 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
                             ),
 
                             ft.Container(
-                                content=ft.Text("Itinerario", size=18, weight="bold", color=ft.colors.WHITE),
+                                content=ft.Text("Itinerario", size=18, weight="bold", color=ft.colors.WHITE if page.theme_mode != ft.ThemeMode.DARK else ft.colors.BLACK),
                                 alignment=ft.alignment.center_left,
                                 padding=ft.padding.only(bottom=5),
                             ),
@@ -440,7 +439,7 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
                             ),
 
                             ft.Container(
-                                content=ft.Text("Sigue la siguiente instrucción:", size=18, weight="bold", color=ft.colors.WHITE),
+                                content=ft.Text("Sigue la siguiente instrucción:", size=18, weight="bold", color=ft.colors.WHITE if page.theme_mode != ft.ThemeMode.DARK else ft.colors.BLACK),
                                 alignment=ft.alignment.center_left,
                                 padding=ft.padding.only(top=20, bottom=5),
                             ),
@@ -456,7 +455,7 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
                                             ft.Column(
                                                 [
                                                     ft.Text("Retrocede al paso anterior", size=12,
-                                                            color=ft.colors.WHITE),
+                                                            color=ft.colors.WHITE if page.theme_mode != ft.ThemeMode.DARK else ft.colors.BLACK),
                                                     ft.IconButton(
                                                         icon=ft.icons.ARROW_LEFT,
                                                         icon_color=ft.colors.WHITE,
@@ -472,7 +471,7 @@ def get_trayecto_view(page: ft.Page) -> ft.View:
                                             ),
                                             ft.Column(
                                                 [
-                                                    ft.Text("Avanza al siguiente paso", size=12, color=ft.colors.WHITE),
+                                                    ft.Text("Avanza al siguiente paso", size=12, color=ft.colors.WHITE if page.theme_mode != ft.ThemeMode.DARK else ft.colors.BLACK),
                                                     ft.IconButton(
                                                         icon=ft.icons.ARROW_RIGHT,
                                                         icon_color=ft.colors.WHITE,

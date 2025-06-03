@@ -28,24 +28,26 @@ def get_fin_trayecto_view(page: ft.Page) -> ft.View:
         title=ft.Text("Valorar aplicación"),
         content=ft.Text("Serás redirigido a la tienda de aplicaciones"),
         actions=[
-            ft.TextButton(
-                "Ok",
+            ft.IconButton(
+                icon=ft.icons.CLOSE,
+                icon_color=ft.colors.RED,
+                on_click=lambda e: (
+                    page.close(valorar_dialog),
+                    page.views.append(inicio.get_home_view(page)),
+                    page.go("/inicio")
+                ),
+                adaptive=True,
+            ),
+            ft.IconButton(
+                icon=ft.icons.CHECK,
+                icon_color=ft.colors.GREEN,
                 on_click=lambda e: (
                     page.launch_url(tienda_url),
                     page.close(valorar_dialog),
                     page.views.append(inicio.get_home_view(page)),
                     page.go("/inicio")
                 ),
-                adaptive=True
-            ),
-            ft.TextButton(
-                "No",
-                on_click=lambda e: (
-                    page.close(valorar_dialog),
-                    page.views.append(inicio.get_home_view(page)),
-                    page.go("/inicio")
-                ),
-                adaptive=True
+                adaptive=True,
             ),
         ],
         actions_alignment=ft.MainAxisAlignment.END,
@@ -63,7 +65,8 @@ def get_fin_trayecto_view(page: ft.Page) -> ft.View:
     boton_si_valora = ft.ElevatedButton(
         "Sí",
         on_click=lambda e: page.open(valorar_dialog),
-        adaptive=True
+        adaptive=True,
+        bgcolor="#005d00"
     )
     boton_no_valora = ft.ElevatedButton(
         "No",
@@ -71,7 +74,8 @@ def get_fin_trayecto_view(page: ft.Page) -> ft.View:
             page.views.append(inicio.get_home_view(page)),
             page.go("/inicio")
         ),
-        adaptive=True
+        adaptive=True,
+        bgcolor=ft.colors.RED,
     )
 
     return ft.View(
@@ -99,7 +103,7 @@ def get_fin_trayecto_view(page: ft.Page) -> ft.View:
                             ft.Divider(height=10, color="transparent"),
                             ft.ElevatedButton(
                                 text="Volver al menú principal",
-                                bgcolor=ft.colors.RED,
+                                bgcolor=ft.colors.BLUE,
                                 color=ft.colors.WHITE,
                                 style=ft.ButtonStyle(
                                     shape=ft.RoundedRectangleBorder(radius=20),

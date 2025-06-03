@@ -22,11 +22,14 @@ def get_home_view(page: ft.Page) -> ft.View:
                         [
                             ft.Text("TransportHelper", size=30, weight=ft.FontWeight.BOLD),
                             ft.Divider(height=20, color="transparent"),
-                            ft.Image(
-                                src="src/assets/bus_black.png" if page.theme_mode == ft.ThemeMode.DARK else "src/assets/bus_not_black.png",
-                                width=150,
-                                height=150,
-                                fit=ft.ImageFit.CONTAIN
+                            ft.GestureDetector(
+                                on_tap=home_click,
+                                content=ft.Image(
+                                    src="src/assets/bus_black.png" if page.theme_mode == ft.ThemeMode.DARK else "src/assets/bus_not_black.png",
+                                    width=150,
+                                    height=150,
+                                    fit=ft.ImageFit.CONTAIN
+                                )
                             ),
                             ft.Divider(height=40, color="transparent"),
                             ft.ElevatedButton(
