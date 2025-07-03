@@ -33,7 +33,7 @@ MarkupSafe==3.0.2
 mdurl==0.1.2
 oauthlib==3.2.2
 packaging==25.0
-pillow==11.2.1
+pillow==11.3.0
 py-staticmaps==0.3.0
 pycairo==1.28.0
 pycparser==2.22
